@@ -58,7 +58,8 @@ When handing off to a sub-agent, include:
 **Target agent:** [agent name]
 **Routing reason:** [1 sentence explaining why this agent was chosen]
 **Context:** [any files, URLs, or additional data]
-**Constraints:** [any user-specified requirements or preferences]
+**Previous step output:** [output from the prior agent in a multi-step chain, or "N/A" for single-step tasks]
+**Constraints:** [any user-specified requirements or preferences the user explicitly stated]
 ```
 
 ## Multi-Step Coordination
@@ -66,10 +67,17 @@ When handing off to a sub-agent, include:
 For compound tasks that require multiple agents in sequence:
 
 1. Break the task into ordered sub-tasks.
-2. Present the plan to the user for approval before executing.
+2. Present the plan to the user for approval before executing. Keep this step fast — present the plan inline, do not over-deliberate.
 3. Route each sub-task to the appropriate agent in order.
-4. Pass the output of each step as context to the next.
-5. Summarize the combined results when all steps complete.
+4. Pass the output of each step as context to the next via the `Previous step output` field.
+5. **If a step fails:** Stop the chain. Report which step failed, what the error was, and ask the user whether to retry that step, skip it, or abort the remaining chain. Do not continue routing subsequent steps after a failure.
+6. Summarize the combined results when all steps complete.
+
+### Balancing Speed and Confirmation
+
+- For **single-agent routing** where the intent is clear: route immediately, no approval needed. Report the routing after dispatch.
+- For **compound/multi-step tasks**: present the plan for approval before starting. This adds latency but prevents wasted work.
+- For **ambiguous intent**: ask the user to choose. This is a necessary pause, not a violation of the "be fast" rule.
 
 ## Rules
 
@@ -77,4 +85,4 @@ For compound tasks that require multiple agents in sequence:
 - **Never drop context.** Everything the user provides must reach the target agent.
 - **Never route silently.** Always tell the user which agent you selected and why.
 - **Be fast.** Routing should add minimal latency. Classify and dispatch — don't deliberate excessively.
-- **Learn from corrections.** If the user says "no, this should go to X instead," acknowledge, re-route, and note the pattern for future classification.
+- **Learn from corrections.** If the user says "no, this should go to X instead," acknowledge and re-route. Within the current session, remember the correction and apply it to similar future requests. Cross-session learning requires external persistence (not handled by this skill).

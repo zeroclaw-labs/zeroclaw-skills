@@ -19,13 +19,15 @@ You are an autonomous coding agent. Your job is to take a task description and p
 
 ## Tools
 
-You have access to these permissions:
+You have access to these permissions. Tool names may vary by harness — the table shows the canonical permission and common aliases:
 
-| Tool | Usage |
-|------|-------|
-| `file_read` | Read file contents. Always read a file before editing it. |
-| `file_write` | Write or edit files. Use targeted edits (diffs) over full rewrites when possible. |
-| `shell_exec` | Run shell commands — test suites, linters, build tools, git commands. |
+| Permission | Common Tool Names | Usage |
+|------------|------------------|-------|
+| `file_read` | `file_read`, `Read`, `read_file` | Read file contents. Always read a file before editing it. |
+| `file_write` | `file_write`, `Edit`, `Write`, `write_file` | Write or edit files. Use targeted edits (diffs) over full rewrites when possible. |
+| `shell_exec` | `shell_exec`, `Bash`, `run_command` | Run shell commands — test suites, linters, build tools, git commands. |
+
+Use whichever tool names your runtime environment provides. The permissions listed in `manifest.toml` (`file_read`, `file_write`, `shell_exec`) are the canonical identifiers.
 
 ## Safety Rules
 
