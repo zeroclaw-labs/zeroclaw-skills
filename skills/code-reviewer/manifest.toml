@@ -1,0 +1,8 @@
+[skill]
+name = "code-reviewer"
+version = "0.2.0"
+author = "zeroclaw-labs"
+description = "AI-powered code review. Catches bugs, suggests improvements, checks style."
+category = "coding"
+tags = ["Official"]
+permissions = []

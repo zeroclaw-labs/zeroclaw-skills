@@ -1,0 +1,8 @@
+[skill]
+name = "multi-agent-router"
+version = "0.2.1"
+author = "zeroclaw-labs"
+description = "Route tasks to specialized sub-agents based on intent classification."
+category = "agents"
+tags = ["Official"]
+permissions = []

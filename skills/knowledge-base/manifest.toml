@@ -1,0 +1,8 @@
+[skill]
+name = "knowledge-base"
+version = "0.3.0"
+author = "zeroclaw-labs"
+description = "Build and query a private RAG knowledge base from your documents."
+category = "research"
+tags = ["Official", "Featured"]
+permissions = []

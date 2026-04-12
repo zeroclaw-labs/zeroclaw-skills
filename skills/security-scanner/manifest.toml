@@ -1,0 +1,8 @@
+[skill]
+name = "security-scanner"
+version = "0.1.1"
+author = "community"
+description = "Scan repos for vulnerabilities, secrets, and dependency issues."
+category = "security"
+tags = ["Community"]
+permissions = []

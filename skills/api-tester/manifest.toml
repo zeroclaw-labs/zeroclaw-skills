@@ -1,0 +1,8 @@
+[skill]
+name = "api-tester"
+version = "0.1.0"
+author = "community"
+description = "Automated API testing with schema validation and load testing."
+category = "devops"
+tags = ["Community"]
+permissions = []

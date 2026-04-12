@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "skills": [
+    {
+      "name": "auto-coder",
+      "version": "0.3.0",
+      "author": "zeroclaw-labs",
+      "description": "Autonomous code generation agent. Reads context, writes code, runs tests.",
+      "category": "coding",
+      "tags": ["Official", "Featured"],
+      "downloads": 2841,
+      "stars": 142
+    },
+    {
+      "name": "web-researcher",
+      "version": "0.2.1",
+      "author": "zeroclaw-labs",
+      "description": "Deep web research with source citation. Summarizes findings privately.",
+      "category": "research",
+      "tags": ["Official"],
+      "downloads": 1923,
+      "stars": 98
+    },
+    {
+      "name": "telegram-assistant",
+      "version": "0.4.0",
+      "author": "zeroclaw-labs",
+      "description": "Full-featured Telegram bot skill with inline queries and media support.",
+      "category": "chat",
+      "tags": ["Official", "Featured"],
+      "downloads": 3201,
+      "stars": 167
+    },
+    {
+      "name": "discord-moderator",
+      "version": "0.1.2",
+      "author": "community",
+      "description": "Automated Discord moderation with configurable rules and auto-responses.",
+      "category": "chat",
+      "tags": ["Community"],
+      "downloads": 1547,
+      "stars": 83
+    },
+    {
+      "name": "code-reviewer",
+      "version": "0.2.0",
+      "author": "zeroclaw-labs",
+      "description": "AI-powered code review. Catches bugs, suggests improvements, checks style.",
+      "category": "coding",
+      "tags": ["Official"],
+      "downloads": 2156,
+      "stars": 119
+    },
+    {
+      "name": "data-analyst",
+      "version": "0.1.0",
+      "author": "community",
+      "description": "Analyze CSV, JSON, and SQL data. Generate charts and insights locally.",
+      "category": "data",
+      "tags": ["Community"],
+      "downloads": 987,
+      "stars": 54
+    },
+    {
+      "name": "doc-writer",
+      "version": "0.2.0",
+      "author": "zeroclaw-labs",
+      "description": "Generate documentation from code. Supports Markdown, RST, and JSDoc.",
+      "category": "writing",
+      "tags": ["Official"],
+      "downloads": 1432,
+      "stars": 71
+    },
+    {
+      "name": "security-scanner",
+      "version": "0.1.1",
+      "author": "community",
+      "description": "Scan repos for vulnerabilities, secrets, and dependency issues.",
+      "category": "security",
+      "tags": ["Community"],
+      "downloads": 876,
+      "stars": 62
+    },
+    {
+      "name": "api-tester",
+      "version": "0.1.0",
+      "author": "community",
+      "description": "Automated API testing with schema validation and load testing.",
+      "category": "devops",
+      "tags": ["Community"],
+      "downloads": 643,
+      "stars": 38
+    },
+    {
+      "name": "knowledge-base",
+      "version": "0.3.0",
+      "author": "zeroclaw-labs",
+      "description": "Build and query a private RAG knowledge base from your documents.",
+      "category": "research",
+      "tags": ["Official", "Featured"],
+      "downloads": 2087,
+      "stars": 134
+    },
+    {
+      "name": "ci-helper",
+      "version": "0.1.0",
+      "author": "community",
+      "description": "Monitor CI/CD pipelines, diagnose failures, suggest fixes.",
+      "category": "devops",
+      "tags": ["Community"],
+      "downloads": 521,
+      "stars": 29
+    },
+    {
+      "name": "email-responder",
+      "version": "0.1.1",
+      "author": "community",
+      "description": "Draft and send email replies with context-aware tone matching.",
+      "category": "chat",
+      "tags": ["Community"],
+      "downloads": 1102,
+      "stars": 57
+    },
+    {
+      "name": "git-assistant",
+      "version": "0.2.0",
+      "author": "zeroclaw-labs",
+      "description": "Smart git operations — interactive rebase, conflict resolution, changelog generation.",
+      "category": "tools",
+      "tags": ["Official"],
+      "downloads": 1876,
+      "stars": 95
+    },
+    {
+      "name": "self-improving-agent",
+      "version": "0.0.3",
+      "author": "community",
+      "description": "Agent that evaluates its own performance and iterates on prompts.",
+      "category": "agents",
+      "tags": ["Community", "Experimental"],
+      "downloads": 432,
+      "stars": 47
+    },
+    {
+      "name": "multi-agent-router",
+      "version": "0.2.1",
+      "author": "zeroclaw-labs",
+      "description": "Route tasks to specialized sub-agents based on intent classification.",
+      "category": "agents",
+      "tags": ["Official"],
+      "downloads": 1654,
+      "stars": 112
+    },
+    {
+      "name": "slack-connector",
+      "version": "0.3.0",
+      "author": "zeroclaw-labs",
+      "description": "Full Slack integration with slash commands, threads, and file sharing.",
+      "category": "chat",
+      "tags": ["Official"],
+      "downloads": 2543,
+      "stars": 131
+    }
+  ]
+}

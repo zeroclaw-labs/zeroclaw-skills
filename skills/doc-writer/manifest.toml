@@ -1,0 +1,8 @@
+[skill]
+name = "doc-writer"
+version = "0.2.0"
+author = "zeroclaw-labs"
+description = "Generate documentation from code. Supports Markdown, RST, and JSDoc."
+category = "writing"
+tags = ["Official"]
+permissions = []

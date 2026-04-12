@@ -1,0 +1,8 @@
+[skill]
+name = "ci-helper"
+version = "0.1.0"
+author = "community"
+description = "Monitor CI/CD pipelines, diagnose failures, suggest fixes."
+category = "devops"
+tags = ["Community"]
+permissions = []

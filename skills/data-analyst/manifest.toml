@@ -1,0 +1,8 @@
+[skill]
+name = "data-analyst"
+version = "0.1.0"
+author = "community"
+description = "Analyze CSV, JSON, and SQL data. Generate charts and insights locally."
+category = "data"
+tags = ["Community"]
+permissions = []

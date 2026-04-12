@@ -1,0 +1,110 @@
+name: Validate Skills
+
+on:
+  pull_request:
+    paths:
+      - 'skills/**'
+      - 'registry.json'
+  push:
+    branches: [master]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate registry.json
+        run: python3 -c "import json; json.load(open('registry.json'))"
+
+      - name: Check skill folders have required files
+        run: |
+          errors=0
+          for dir in skills/*/; do
+            name=$(basename "$dir")
+            if [ ! -f "$dir/manifest.toml" ]; then
+              echo "ERROR: $name missing manifest.toml"
+              errors=$((errors + 1))
+            fi
+            if [ ! -f "$dir/SKILL.md" ]; then
+              echo "ERROR: $name missing SKILL.md"
+              errors=$((errors + 1))
+            fi
+            if [ ! -s "$dir/SKILL.md" ]; then
+              echo "ERROR: $name SKILL.md is empty"
+              errors=$((errors + 1))
+            fi
+          done
+          if [ $errors -gt 0 ]; then
+            echo "Found $errors validation errors"
+            exit 1
+          fi
+          echo "All skills validated"
+
+      - name: Check manifest fields
+        run: |
+          pip install toml > /dev/null 2>&1
+          python3 << 'EOF'
+          import toml, os, sys
+
+          errors = 0
+          required = ["name", "version", "author", "description", "category"]
+
+          for skill_dir in sorted(os.listdir("skills")):
+              path = f"skills/{skill_dir}/manifest.toml"
+              if not os.path.isfile(path):
+                  continue
+              try:
+                  data = toml.load(path)
+                  skill = data.get("skill", {})
+                  for field in required:
+                      if not skill.get(field):
+                          print(f"ERROR: {skill_dir}/manifest.toml missing '{field}'")
+                          errors += 1
+                  if skill.get("name") != skill_dir:
+                      print(f"ERROR: {skill_dir} name mismatch: manifest says '{skill.get('name')}'")
+                      errors += 1
+              except Exception as e:
+                  print(f"ERROR: {skill_dir}/manifest.toml parse error: {e}")
+                  errors += 1
+
+          if errors:
+              print(f"\n{errors} errors found")
+              sys.exit(1)
+          print("All manifests valid")
+          EOF
+
+      - name: Check registry matches skill folders
+        run: |
+          python3 << 'EOF'
+          import json, os, sys
+
+          with open("registry.json") as f:
+              reg = json.load(f)
+
+          registry_names = {s["name"] for s in reg["skills"]}
+          folder_names = {d for d in os.listdir("skills") if os.path.isdir(f"skills/{d}")}
+
+          missing_folders = registry_names - folder_names
+          missing_registry = folder_names - registry_names
+
+          errors = 0
+          for name in missing_folders:
+              print(f"ERROR: '{name}' in registry.json but no skills/{name}/ folder")
+              errors += 1
+          for name in missing_registry:
+              print(f"ERROR: skills/{name}/ exists but not in registry.json")
+              errors += 1
+
+          dupes = [s["name"] for s in reg["skills"]]
+          seen = set()
+          for name in dupes:
+              if name in seen:
+                  print(f"ERROR: duplicate '{name}' in registry.json")
+                  errors += 1
+              seen.add(name)
+
+          if errors:
+              sys.exit(1)
+          print(f"Registry and folders match ({len(registry_names)} skills)")
+          EOF

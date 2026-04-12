@@ -1,0 +1,8 @@
+[skill]
+name = "web-researcher"
+version = "0.2.1"
+author = "zeroclaw-labs"
+description = "Deep web research with source citation. Summarizes findings privately."
+category = "research"
+tags = ["Official"]
+permissions = ["web_search", "web_fetch"]
