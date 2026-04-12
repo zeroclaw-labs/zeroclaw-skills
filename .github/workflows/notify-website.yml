@@ -1,0 +1,33 @@
+name: Notify Website
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'registry.json'
+      - 'skills/**'
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger website rebuild
+        env:
+          DISPATCH_TOKEN: ${{ secrets.DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$DISPATCH_TOKEN" ]; then
+            echo "::warning::DISPATCH_TOKEN not configured — skipping website notification."
+            echo "Add a PAT with repo scope on zeroclaw-website as DISPATCH_TOKEN secret."
+            exit 0
+          fi
+
+          curl -s -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $DISPATCH_TOKEN" \
+            "https://api.github.com/repos/zeroclaw-labs/zeroclaw-website/dispatches" \
+            -d '{"event_type":"skills-updated"}'
+
+          echo "Dispatched skills-updated event to zeroclaw-website."
