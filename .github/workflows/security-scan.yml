@@ -1,0 +1,410 @@
+name: Security Scan
+
+on:
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  secret-detection:
+    name: Secret Detection
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  file-policy:
+    name: File Policy Enforcement
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check file policy
+        run: |
+          ERRORS=""
+          ALLOWED_EXT="toml md wasm json yml yaml"
+
+          # Get changed files in the PR
+          git fetch origin "$GITHUB_BASE_REF"
+          CHANGED=$(git diff --name-only --diff-filter=ACMRT "origin/$GITHUB_BASE_REF"...HEAD)
+
+          for file in $CHANGED; do
+            # Skip workflow files
+            if [[ "$file" == .github/* ]]; then
+              continue
+            fi
+
+            # Check for hidden files
+            basename=$(basename "$file")
+            if [[ "$basename" == .* ]]; then
+              ERRORS="${ERRORS}HIDDEN FILE: $file\n"
+            fi
+
+            # Check for symlinks
+            if [ -L "$file" ]; then
+              ERRORS="${ERRORS}SYMLINK: $file\n"
+            fi
+
+            # Check file extension
+            ext="${file##*.}"
+            if ! echo "$ALLOWED_EXT" | grep -qw "$ext"; then
+              ERRORS="${ERRORS}DISALLOWED EXTENSION (.$ext): $file\n"
+            fi
+
+            # Check file size (500KB limit)
+            if [ -f "$file" ]; then
+              size=$(stat -c%s "$file" 2>/dev/null || stat -f%z "$file" 2>/dev/null)
+              if [ "$size" -gt 512000 ]; then
+                ERRORS="${ERRORS}FILE TOO LARGE (${size} bytes): $file\n"
+              fi
+            fi
+          done
+
+          if [ -n "$ERRORS" ]; then
+            echo "::error::File policy violations found:"
+            echo -e "$ERRORS"
+            exit 1
+          fi
+          echo "All files pass policy checks."
+
+  content-scan:
+    name: Content Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Scan for dangerous content
+        run: |
+          git fetch origin "$GITHUB_BASE_REF"
+          CHANGED=$(git diff --name-only --diff-filter=ACMRT "origin/$GITHUB_BASE_REF"...HEAD)
+
+          python3 - "$CHANGED" << 'PYEOF'
+          import sys, re, math, os
+
+          changed_files = sys.argv[1].strip().split("\n") if sys.argv[1].strip() else []
+          errors = []
+
+          # Patterns to detect
+          PROMPT_INJECTION = [
+              r"(?i)ignore\s+(all\s+)?previous\s+instructions",
+              r"(?i)disregard\s+(all\s+)?(previous|above|prior)\s+instructions",
+              r"(?i)forget\s+(all\s+)?previous\s+(instructions|context)",
+              r"(?i)you\s+are\s+now\s+(a|an)\s+",
+              r"(?i)new\s+system\s+prompt",
+              r"(?i)override\s+system\s+prompt",
+              r"(?i)\bsystem:\s",
+              r"(?i)act\s+as\s+(a\s+)?root",
+              r"(?i)sudo\s+",
+              r"(?i)jailbreak",
+          ]
+
+          DANGEROUS_SHELL = [
+              r"curl\s+.*\|\s*(ba)?sh",
+              r"wget\s+.*\|\s*(ba)?sh",
+              r"curl\s+.*-o\s+/",
+              r"eval\s*\(",
+              r"exec\s*\(",
+              r"\bchmod\s+\+x\b",
+              r"\brm\s+-rf\s+/",
+              r"\\x[0-9a-fA-F]{2}",
+          ]
+
+          SUSPICIOUS_URL = [
+              r"https?://\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}",
+              r"data:[^,]+;base64,",
+              r"javascript:",
+              r"https?://[^/]+\.(xyz|top|buzz|click|loan|work|gq|ml|cf|tk|ga)\b",
+          ]
+
+          CREDENTIAL_PATTERNS = [
+              r"(?i)(api[_-]?key|api[_-]?secret|access[_-]?token|auth[_-]?token)\s*[=:]\s*['\"][A-Za-z0-9+/=_-]{20,}['\"]",
+              r"(?i)bearer\s+[A-Za-z0-9+/=_.-]{20,}",
+              r"AKIA[0-9A-Z]{16}",
+              r"(?i)(sk|pk)[-_](live|test)[-_][A-Za-z0-9]{20,}",
+              r"ghp_[A-Za-z0-9]{36}",
+              r"-----BEGIN\s+(RSA\s+)?PRIVATE\s+KEY-----",
+          ]
+
+          def entropy(s):
+              if len(s) == 0:
+                  return 0
+              freq = {}
+              for c in s:
+                  freq[c] = freq.get(c, 0) + 1
+              return -sum((count / len(s)) * math.log2(count / len(s)) for count in freq.values())
+
+          def scan_file(filepath):
+              if not os.path.isfile(filepath):
+                  return
+              try:
+                  content = open(filepath, "r", errors="ignore").read()
+              except Exception:
+                  return
+              lines = content.split("\n")
+              for i, line in enumerate(lines, 1):
+                  for pat in PROMPT_INJECTION:
+                      if re.search(pat, line):
+                          errors.append(f"PROMPT INJECTION in {filepath}:{i}: {line.strip()[:80]}")
+                  for pat in DANGEROUS_SHELL:
+                      if re.search(pat, line):
+                          errors.append(f"DANGEROUS SHELL CMD in {filepath}:{i}: {line.strip()[:80]}")
+                  for pat in SUSPICIOUS_URL:
+                      if re.search(pat, line):
+                          errors.append(f"SUSPICIOUS URL in {filepath}:{i}: {line.strip()[:80]}")
+                  for pat in CREDENTIAL_PATTERNS:
+                      if re.search(pat, line):
+                          errors.append(f"CREDENTIAL LEAK in {filepath}:{i}: {line.strip()[:80]}")
+
+                  # High-entropy blob detection (base64/hex payloads)
+                  for token in re.findall(r"[A-Za-z0-9+/=]{50,}", line):
+                      if entropy(token) > 4.5:
+                          errors.append(f"HIGH ENTROPY BLOB in {filepath}:{i}: {token[:60]}...")
+
+          for f in changed_files:
+              if f.startswith(".github/"):
+                  continue
+              if f.endswith((".md", ".toml", ".json")):
+                  scan_file(f)
+
+          if errors:
+              print("::error::Content scan found issues:")
+              for e in errors:
+                  print(f"  - {e}")
+              sys.exit(1)
+          else:
+              print("Content scan passed.")
+          PYEOF
+
+  wasm-analysis:
+    name: WASM Static Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Analyze WASM files
+        run: |
+          git fetch origin "$GITHUB_BASE_REF"
+          WASM_FILES=$(git diff --name-only --diff-filter=ACMRT "origin/$GITHUB_BASE_REF"...HEAD | grep '\.wasm$' || true)
+
+          if [ -z "$WASM_FILES" ]; then
+            echo "No WASM files to analyze."
+            exit 0
+          fi
+
+          python3 - $WASM_FILES << 'PYEOF'
+          import sys, struct
+
+          BLOCKED_MODULES = {"wasi_snapshot_preview1", "env"}
+          BLOCKED_IMPORTS = {
+              "fd_read", "fd_write", "fd_seek", "fd_close", "path_open",
+              "proc_exit", "sock_accept", "sock_recv", "sock_send",
+              "sock_shutdown", "fd_prestat_get", "fd_prestat_dir_name",
+          }
+
+          def parse_wasm_imports(filepath):
+              imports = []
+              try:
+                  with open(filepath, "rb") as f:
+                      magic = f.read(4)
+                      if magic != b'\x00asm':
+                          return None, "Not a valid WASM file"
+                      f.read(4)  # version
+                      while True:
+                          section_id_bytes = f.read(1)
+                          if not section_id_bytes:
+                              break
+                          section_id = section_id_bytes[0]
+                          # Read LEB128 section size
+                          size = 0
+                          shift = 0
+                          while True:
+                              byte = f.read(1)
+                              if not byte:
+                                  return imports, None
+                              b = byte[0]
+                              size |= (b & 0x7f) << shift
+                              shift += 7
+                              if not (b & 0x80):
+                                  break
+                          section_data = f.read(size)
+                          if section_id == 2:  # Import section
+                              idx = 0
+                              # Read number of imports (LEB128)
+                              count = 0
+                              shift = 0
+                              while idx < len(section_data):
+                                  b = section_data[idx]; idx += 1
+                                  count |= (b & 0x7f) << shift
+                                  shift += 7
+                                  if not (b & 0x80):
+                                      break
+                              for _ in range(count):
+                                  # module name
+                                  mod_len = 0; shift = 0
+                                  while idx < len(section_data):
+                                      b = section_data[idx]; idx += 1
+                                      mod_len |= (b & 0x7f) << shift
+                                      shift += 7
+                                      if not (b & 0x80):
+                                          break
+                                  mod_name = section_data[idx:idx+mod_len].decode("utf-8", errors="replace")
+                                  idx += mod_len
+                                  # field name
+                                  field_len = 0; shift = 0
+                                  while idx < len(section_data):
+                                      b = section_data[idx]; idx += 1
+                                      field_len |= (b & 0x7f) << shift
+                                      shift += 7
+                                      if not (b & 0x80):
+                                          break
+                                  field_name = section_data[idx:idx+field_len].decode("utf-8", errors="replace")
+                                  idx += field_len
+                                  # import kind + type index
+                                  kind = section_data[idx]; idx += 1
+                                  # skip type index (LEB128)
+                                  while idx < len(section_data):
+                                      b = section_data[idx]; idx += 1
+                                      if not (b & 0x80):
+                                          break
+                                  imports.append((mod_name, field_name))
+                              break
+              except Exception as e:
+                  return None, str(e)
+              return imports, None
+
+          errors = []
+          for filepath in sys.argv[1:]:
+              imports, err = parse_wasm_imports(filepath)
+              if err:
+                  errors.append(f"WASM PARSE ERROR in {filepath}: {err}")
+                  continue
+              if imports is None:
+                  continue
+              for mod, field in imports:
+                  if field in BLOCKED_IMPORTS:
+                      errors.append(f"BLOCKED WASM IMPORT in {filepath}: {mod}.{field}")
+
+          if errors:
+              print("::error::WASM analysis found issues:")
+              for e in errors:
+                  print(f"  - {e}")
+              sys.exit(1)
+          else:
+              print("WASM analysis passed.")
+          PYEOF
+
+  registry-integrity:
+    name: Registry Integrity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check registry integrity
+        run: |
+          git fetch origin "$GITHUB_BASE_REF"
+          CHANGED=$(git diff --name-only --diff-filter=ACMRT "origin/$GITHUB_BASE_REF"...HEAD)
+
+          # Only run if registry.json was changed
+          if ! echo "$CHANGED" | grep -q "registry.json"; then
+            echo "registry.json not modified, skipping."
+            exit 0
+          fi
+
+          python3 - << 'PYEOF'
+          import json, re, sys
+
+          VALID_CATEGORIES = {
+              "agents", "coding", "research", "writing", "chat",
+              "security", "data", "devops", "tools"
+          }
+          SEMVER_RE = r"^\d+\.\d+\.\d+(-[a-zA-Z0-9.]+)?$"
+          errors = []
+
+          try:
+              with open("registry.json") as f:
+                  data = json.load(f)
+          except Exception as e:
+              print(f"::error::Cannot parse registry.json: {e}")
+              sys.exit(1)
+
+          if "skills" not in data or not isinstance(data["skills"], list):
+              print("::error::registry.json must have a 'skills' array")
+              sys.exit(1)
+
+          seen_names = set()
+          for i, skill in enumerate(data["skills"]):
+              name = skill.get("name", f"<unnamed-{i}>")
+
+              # Path traversal
+              if ".." in name or "/" in name or "\\" in name:
+                  errors.append(f"PATH TRAVERSAL in skill name: {name}")
+
+              # Duplicate names
+              if name in seen_names:
+                  errors.append(f"DUPLICATE skill name: {name}")
+              seen_names.add(name)
+
+              # Semver
+              version = skill.get("version", "")
+              if not re.match(SEMVER_RE, version):
+                  errors.append(f"INVALID SEMVER for {name}: {version}")
+
+              # Category
+              cat = skill.get("category", "")
+              if cat not in VALID_CATEGORIES:
+                  errors.append(f"INVALID CATEGORY for {name}: {cat} (allowed: {VALID_CATEGORIES})")
+
+              # No external URLs in description
+              desc = skill.get("description", "")
+              if re.search(r"https?://", desc):
+                  errors.append(f"EXTERNAL URL in description for {name}")
+
+          if errors:
+              print("::error::Registry integrity issues:")
+              for e in errors:
+                  print(f"  - {e}")
+              sys.exit(1)
+          else:
+              print("Registry integrity check passed.")
+          PYEOF
+
+  report:
+    name: Report Results
+    runs-on: ubuntu-latest
+    if: failure()
+    needs: [secret-detection, file-policy, content-scan, wasm-analysis, registry-integrity]
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: context.runId,
+            });
+            const failed = jobs.jobs
+              .filter(j => j.conclusion === 'failure' && j.name !== 'Report Results')
+              .map(j => `- **${j.name}**: [View logs](${j.html_url})`)
+              .join('\n');
+            const body = `## Security Scan Failed\n\nThe following checks failed:\n\n${failed}\n\nPlease fix the issues and push again. See the job logs for details.`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });
