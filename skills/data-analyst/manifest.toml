@@ -5,4 +5,5 @@ author = "community"
 description = "Analyze CSV, JSON, and SQL data. Generate charts and insights locally."
 category = "data"
 tags = ["Community"]
+license = "MIT"
 permissions = []

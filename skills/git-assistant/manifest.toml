@@ -5,4 +5,5 @@ author = "zeroclaw-labs"
 description = "Smart git operations — interactive rebase, conflict resolution, changelog generation."
 category = "tools"
 tags = ["Official"]
+license = "MIT"
 permissions = []

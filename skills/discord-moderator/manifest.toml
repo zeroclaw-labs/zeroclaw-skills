@@ -5,4 +5,5 @@ author = "community"
 description = "Automated Discord moderation with configurable rules and auto-responses."
 category = "chat"
 tags = ["Community"]
+license = "MIT"
 permissions = []

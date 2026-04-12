@@ -8,11 +8,14 @@ on:
   push:
     branches: [master]
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Validate registry.json
         run: python3 -c "import json; json.load(open('registry.json'))"
@@ -50,6 +53,11 @@ jobs:
           errors = 0
           required = ["name", "version", "author", "description", "category"]
 
+          VALID_LICENSES = {
+              "MIT", "Apache-2.0", "CC-BY-4.0", "CC-BY-SA-4.0", "CC0-1.0",
+              "BSD-2-Clause", "BSD-3-Clause", "ISC", "Unlicense",
+          }
+
           for skill_dir in sorted(os.listdir("skills")):
               path = f"skills/{skill_dir}/manifest.toml"
               if not os.path.isfile(path):
@@ -63,6 +71,15 @@ jobs:
                           errors += 1
                   if skill.get("name") != skill_dir:
                       print(f"ERROR: {skill_dir} name mismatch: manifest says '{skill.get('name')}'")
+                      errors += 1
+
+                  # License validation
+                  license_val = skill.get("license", "")
+                  if not license_val:
+                      print(f"ERROR: {skill_dir}/manifest.toml missing 'license' field")
+                      errors += 1
+                  elif license_val not in VALID_LICENSES:
+                      print(f"ERROR: {skill_dir} invalid license '{license_val}' — allowed: {sorted(VALID_LICENSES)}")
                       errors += 1
               except Exception as e:
                   print(f"ERROR: {skill_dir}/manifest.toml parse error: {e}")

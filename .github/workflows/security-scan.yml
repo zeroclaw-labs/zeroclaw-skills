@@ -13,10 +13,10 @@ jobs:
     name: Secret Detection
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
-      - uses: gitleaks/gitleaks-action@v2
+      - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -24,15 +24,16 @@ jobs:
     name: File Policy Enforcement
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - name: Check file policy
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
         run: |
           ERRORS=""
           ALLOWED_EXT="toml md wasm json yml yaml"
 
-          # Get changed files in the PR
-          git fetch origin "$GITHUB_BASE_REF"
-          CHANGED=$(git diff --name-only --diff-filter=ACMRT "origin/$GITHUB_BASE_REF"...HEAD)
+          git fetch origin "$BASE_REF"
+          CHANGED=$(git diff --name-only --diff-filter=ACMRT "origin/$BASE_REF"...HEAD)
 
           for file in $CHANGED; do
             # Skip workflow files
@@ -77,16 +78,18 @@ jobs:
     name: Content Scanning
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.12"
       - name: Scan for dangerous content
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
         run: |
-          git fetch origin "$GITHUB_BASE_REF"
-          CHANGED=$(git diff --name-only --diff-filter=ACMRT "origin/$GITHUB_BASE_REF"...HEAD)
+          git fetch origin "$BASE_REF"
+          CHANGED=$(git diff --name-only --diff-filter=ACMRT "origin/$BASE_REF"...HEAD)
 
           python3 - "$CHANGED" << 'PYEOF'
           import sys, re, math, os
@@ -94,7 +97,6 @@ jobs:
           changed_files = sys.argv[1].strip().split("\n") if sys.argv[1].strip() else []
           errors = []
 
-          # Patterns to detect
           PROMPT_INJECTION = [
               r"(?i)ignore\s+(all\s+)?previous\s+instructions",
               r"(?i)disregard\s+(all\s+)?(previous|above|prior)\s+instructions",
@@ -189,16 +191,18 @@ jobs:
     name: WASM Static Analysis
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.12"
       - name: Analyze WASM files
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
         run: |
-          git fetch origin "$GITHUB_BASE_REF"
-          WASM_FILES=$(git diff --name-only --diff-filter=ACMRT "origin/$GITHUB_BASE_REF"...HEAD | grep '\.wasm$' || true)
+          git fetch origin "$BASE_REF"
+          WASM_FILES=$(git diff --name-only --diff-filter=ACMRT "origin/$BASE_REF"...HEAD | grep '\.wasm$' || true)
 
           if [ -z "$WASM_FILES" ]; then
             echo "No WASM files to analyze."
@@ -208,7 +212,6 @@ jobs:
           python3 - $WASM_FILES << 'PYEOF'
           import sys, struct
 
-          BLOCKED_MODULES = {"wasi_snapshot_preview1", "env"}
           BLOCKED_IMPORTS = {
               "fd_read", "fd_write", "fd_seek", "fd_close", "path_open",
               "proc_exit", "sock_accept", "sock_recv", "sock_send",
@@ -228,7 +231,6 @@ jobs:
                           if not section_id_bytes:
                               break
                           section_id = section_id_bytes[0]
-                          # Read LEB128 section size
                           size = 0
                           shift = 0
                           while True:
@@ -243,7 +245,6 @@ jobs:
                           section_data = f.read(size)
                           if section_id == 2:  # Import section
                               idx = 0
-                              # Read number of imports (LEB128)
                               count = 0
                               shift = 0
                               while idx < len(section_data):
@@ -253,7 +254,6 @@ jobs:
                                   if not (b & 0x80):
                                       break
                               for _ in range(count):
-                                  # module name
                                   mod_len = 0; shift = 0
                                   while idx < len(section_data):
                                       b = section_data[idx]; idx += 1
@@ -263,7 +263,6 @@ jobs:
                                           break
                                   mod_name = section_data[idx:idx+mod_len].decode("utf-8", errors="replace")
                                   idx += mod_len
-                                  # field name
                                   field_len = 0; shift = 0
                                   while idx < len(section_data):
                                       b = section_data[idx]; idx += 1
@@ -273,9 +272,7 @@ jobs:
                                           break
                                   field_name = section_data[idx:idx+field_len].decode("utf-8", errors="replace")
                                   idx += field_len
-                                  # import kind + type index
                                   kind = section_data[idx]; idx += 1
-                                  # skip type index (LEB128)
                                   while idx < len(section_data):
                                       b = section_data[idx]; idx += 1
                                       if not (b & 0x80):
@@ -311,15 +308,16 @@ jobs:
     name: Registry Integrity
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
       - name: Check registry integrity
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
         run: |
-          git fetch origin "$GITHUB_BASE_REF"
-          CHANGED=$(git diff --name-only --diff-filter=ACMRT "origin/$GITHUB_BASE_REF"...HEAD)
+          git fetch origin "$BASE_REF"
+          CHANGED=$(git diff --name-only --diff-filter=ACMRT "origin/$BASE_REF"...HEAD)
 
-          # Only run if registry.json was changed
           if ! echo "$CHANGED" | grep -q "registry.json"; then
             echo "registry.json not modified, skipping."
             exit 0
@@ -350,26 +348,21 @@ jobs:
           for i, skill in enumerate(data["skills"]):
               name = skill.get("name", f"<unnamed-{i}>")
 
-              # Path traversal
               if ".." in name or "/" in name or "\\" in name:
                   errors.append(f"PATH TRAVERSAL in skill name: {name}")
 
-              # Duplicate names
               if name in seen_names:
                   errors.append(f"DUPLICATE skill name: {name}")
               seen_names.add(name)
 
-              # Semver
               version = skill.get("version", "")
               if not re.match(SEMVER_RE, version):
                   errors.append(f"INVALID SEMVER for {name}: {version}")
 
-              # Category
               cat = skill.get("category", "")
               if cat not in VALID_CATEGORIES:
                   errors.append(f"INVALID CATEGORY for {name}: {cat} (allowed: {VALID_CATEGORIES})")
 
-              # No external URLs in description
               desc = skill.get("description", "")
               if re.search(r"https?://", desc):
                   errors.append(f"EXTERNAL URL in description for {name}")
@@ -383,13 +376,209 @@ jobs:
               print("Registry integrity check passed.")
           PYEOF
 
+  permission-audit:
+    name: Permission Combo Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+      - name: Install toml parser
+        run: pip install toml > /dev/null 2>&1
+      - name: Audit skill permissions
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+        run: |
+          git fetch origin "$BASE_REF"
+          CHANGED=$(git diff --name-only --diff-filter=ACMRT "origin/$BASE_REF"...HEAD)
+          MANIFESTS=$(echo "$CHANGED" | grep 'manifest\.toml$' || true)
+
+          if [ -z "$MANIFESTS" ]; then
+            echo "No manifest.toml files changed, skipping."
+            exit 0
+          fi
+
+          python3 - $MANIFESTS << 'PYEOF'
+          import sys, toml
+
+          NETWORK_PERMS = {"web_search", "web_fetch", "channel_read", "channel_write",
+                           "channel_slack", "channel_discord", "channel_telegram"}
+
+          errors = []
+          warnings = []
+
+          for filepath in sys.argv[1:]:
+              try:
+                  data = toml.load(filepath)
+              except Exception as e:
+                  errors.append(f"PARSE ERROR in {filepath}: {e}")
+                  continue
+
+              skill = data.get("skill", {})
+              name = skill.get("name", filepath)
+              perms = set(skill.get("permissions", []))
+
+              has_shell = "shell_exec" in perms
+              has_file_write = "file_write" in perms
+              has_file_read = "file_read" in perms
+              has_network = bool(perms & NETWORK_PERMS)
+
+              # BLOCK: shell_exec + any network = RCE + exfiltration
+              if has_shell and has_network:
+                  errors.append(
+                      f"DANGEROUS COMBO in {name}: shell_exec + network "
+                      f"({perms & NETWORK_PERMS}) allows remote code execution with data exfiltration"
+                  )
+
+              # BLOCK: file_write + shell_exec = write and execute arbitrary code
+              if has_file_write and has_shell:
+                  errors.append(
+                      f"DANGEROUS COMBO in {name}: file_write + shell_exec "
+                      f"allows writing and executing arbitrary code"
+                  )
+
+              # WARN: file_read + network = potential data exfiltration
+              if has_file_read and has_network:
+                  warnings.append(
+                      f"RISKY COMBO in {name}: file_read + network "
+                      f"({perms & NETWORK_PERMS}) could allow data exfiltration — requires maintainer review"
+                  )
+
+              # WARN: shell_exec alone
+              if has_shell and not has_network and not has_file_write:
+                  warnings.append(
+                      f"ELEVATED RISK in {name}: shell_exec requested — requires maintainer justification"
+                  )
+
+              # WARN: more than 3 permissions
+              if len(perms) > 3:
+                  warnings.append(
+                      f"BROAD PERMISSIONS in {name}: {len(perms)} permissions requested ({perms}) — requires maintainer review"
+                  )
+
+          if warnings:
+              print("::warning::Permission audit warnings:")
+              for w in warnings:
+                  print(f"  ⚠ {w}")
+
+          if errors:
+              print("::error::Permission audit found dangerous combinations:")
+              for e in errors:
+                  print(f"  ✗ {e}")
+              sys.exit(1)
+
+          if not warnings:
+              print("Permission audit passed.")
+          PYEOF
+
+  url-safety:
+    name: URL Safety Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+      - name: Check URLs against Safe Browsing
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          SAFE_BROWSING_API_KEY: ${{ secrets.SAFE_BROWSING_API_KEY }}
+        run: |
+          git fetch origin "$BASE_REF"
+          CHANGED=$(git diff --name-only --diff-filter=ACMRT "origin/$BASE_REF"...HEAD)
+
+          python3 - "$CHANGED" << 'PYEOF'
+          import sys, re, os, json
+          from urllib.request import Request, urlopen
+          from urllib.error import URLError
+
+          changed_files = sys.argv[1].strip().split("\n") if sys.argv[1].strip() else []
+          api_key = os.environ.get("SAFE_BROWSING_API_KEY", "")
+
+          if not api_key:
+              print("No SAFE_BROWSING_API_KEY configured — skipping URL safety check.")
+              print("To enable, add a Google Safe Browsing API key as a repository secret.")
+              sys.exit(0)
+
+          # Extract URLs from changed files
+          url_re = re.compile(r'https?://[^\s\)\]>"\'`]+')
+          urls = set()
+
+          for f in changed_files:
+              if f.startswith(".github/"):
+                  continue
+              if not f.endswith((".md", ".toml")):
+                  continue
+              if not os.path.isfile(f):
+                  continue
+              try:
+                  content = open(f, "r", errors="ignore").read()
+                  for match in url_re.findall(content):
+                      # Strip trailing punctuation
+                      url = match.rstrip(".,;:!?")
+                      urls.add(url)
+              except Exception:
+                  continue
+
+          if not urls:
+              print("No URLs found in changed files.")
+              sys.exit(0)
+
+          print(f"Checking {len(urls)} unique URLs against Google Safe Browsing...")
+
+          # Batch check (API supports up to 500 URLs per request)
+          url_list = list(urls)
+          threats_found = []
+
+          for i in range(0, len(url_list), 500):
+              batch = url_list[i:i+500]
+              payload = {
+                  "client": {"clientId": "zeroclaw-skills-ci", "clientVersion": "1.0"},
+                  "threatInfo": {
+                      "threatTypes": ["MALWARE", "SOCIAL_ENGINEERING", "UNWANTED_SOFTWARE",
+                                      "POTENTIALLY_HARMFUL_APPLICATION"],
+                      "platformTypes": ["ANY_PLATFORM"],
+                      "threatEntryTypes": ["URL"],
+                      "threatEntries": [{"url": u} for u in batch],
+                  },
+              }
+
+              api_url = f"https://safebrowsing.googleapis.com/v4/threatMatches:find?key={api_key}"
+              req = Request(api_url, data=json.dumps(payload).encode(), method="POST")
+              req.add_header("Content-Type", "application/json")
+
+              try:
+                  resp = urlopen(req, timeout=30)
+                  result = json.loads(resp.read())
+                  for match in result.get("matches", []):
+                      threat_url = match["threat"]["url"]
+                      threat_type = match["threatType"]
+                      threats_found.append(f"{threat_type}: {threat_url}")
+              except URLError as e:
+                  print(f"::warning::Safe Browsing API error: {e} — continuing without URL check")
+                  sys.exit(0)
+
+          if threats_found:
+              print("::error::Malicious URLs detected:")
+              for t in threats_found:
+                  print(f"  ✗ {t}")
+              sys.exit(1)
+          else:
+              print(f"All {len(urls)} URLs passed Safe Browsing check.")
+          PYEOF
+
   report:
     name: Report Results
     runs-on: ubuntu-latest
     if: failure()
-    needs: [secret-detection, file-policy, content-scan, wasm-analysis, registry-integrity]
+    needs: [secret-detection, file-policy, content-scan, wasm-analysis, registry-integrity, permission-audit, url-safety]
     steps:
-      - uses: actions/github-script@v7
+      - uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
         with:
           script: |
             const { data: jobs } = await github.rest.actions.listJobsForWorkflowRun({

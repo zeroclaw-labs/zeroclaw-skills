@@ -5,4 +5,5 @@ author = "zeroclaw-labs"
 description = "Route tasks to specialized sub-agents based on intent classification."
 category = "agents"
 tags = ["Official"]
+license = "MIT"
 permissions = []

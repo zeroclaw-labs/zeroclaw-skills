@@ -5,4 +5,5 @@ author = "community"
 description = "Automated API testing with schema validation and load testing."
 category = "devops"
 tags = ["Community"]
+license = "MIT"
 permissions = []

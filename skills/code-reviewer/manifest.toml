@@ -5,4 +5,5 @@ author = "zeroclaw-labs"
 description = "AI-powered code review. Catches bugs, suggests improvements, checks style."
 category = "coding"
 tags = ["Official"]
+license = "MIT"
 permissions = []

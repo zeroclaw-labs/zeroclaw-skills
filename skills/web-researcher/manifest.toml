@@ -5,4 +5,5 @@ author = "zeroclaw-labs"
 description = "Deep web research with source citation. Summarizes findings privately."
 category = "research"
 tags = ["Official"]
+license = "MIT"
 permissions = ["web_search", "web_fetch"]

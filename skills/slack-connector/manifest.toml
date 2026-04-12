@@ -5,4 +5,5 @@ author = "zeroclaw-labs"
 description = "Full Slack integration with slash commands, threads, and file sharing."
 category = "chat"
 tags = ["Official"]
+license = "MIT"
 permissions = []

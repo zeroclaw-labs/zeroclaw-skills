@@ -5,4 +5,5 @@ author = "community"
 description = "Agent that evaluates its own performance and iterates on prompts."
 category = "agents"
 tags = ["Community", "Experimental"]
+license = "MIT"
 permissions = []

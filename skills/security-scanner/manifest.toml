@@ -5,4 +5,5 @@ author = "community"
 description = "Scan repos for vulnerabilities, secrets, and dependency issues."
 category = "security"
 tags = ["Community"]
+license = "MIT"
 permissions = []

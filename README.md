@@ -33,6 +33,7 @@ author = "your-github-username"
 description = "What your skill does in one sentence."
 category = "tools"           # agents, coding, research, writing, chat, security, data, devops, tools
 tags = ["Community"]         # Official, Community, Featured, Experimental
+license = "MIT"              # SPDX identifier — MIT, Apache-2.0, CC-BY-4.0, CC-BY-SA-4.0, CC0-1.0, BSD-2-Clause, BSD-3-Clause, ISC, Unlicense
 permissions = ["file_read"]  # file_read, file_write, shell_exec, web_search, web_fetch, channel_*
 ```
 

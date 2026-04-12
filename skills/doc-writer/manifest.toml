@@ -5,4 +5,5 @@ author = "zeroclaw-labs"
 description = "Generate documentation from code. Supports Markdown, RST, and JSDoc."
 category = "writing"
 tags = ["Official"]
+license = "MIT"
 permissions = []

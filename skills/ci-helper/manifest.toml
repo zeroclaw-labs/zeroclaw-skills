@@ -5,4 +5,5 @@ author = "community"
 description = "Monitor CI/CD pipelines, diagnose failures, suggest fixes."
 category = "devops"
 tags = ["Community"]
+license = "MIT"
 permissions = []

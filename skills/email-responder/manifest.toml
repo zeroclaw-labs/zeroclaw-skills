@@ -5,4 +5,5 @@ author = "community"
 description = "Draft and send email replies with context-aware tone matching."
 category = "chat"
 tags = ["Community"]
+license = "MIT"
 permissions = []
