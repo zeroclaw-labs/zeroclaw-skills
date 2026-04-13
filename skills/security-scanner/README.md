@@ -1,5 +1,5 @@
 # security-scanner
 
 ```bash
-zeroclaw skill install security-scanner
+zeroclaw skills install security-scanner
 ```

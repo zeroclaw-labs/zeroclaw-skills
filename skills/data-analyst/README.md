@@ -1,5 +1,5 @@
 # data-analyst
 
 ```bash
-zeroclaw skill install data-analyst
+zeroclaw skills install data-analyst
 ```

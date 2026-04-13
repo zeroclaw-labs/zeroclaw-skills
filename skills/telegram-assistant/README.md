@@ -4,5 +4,5 @@ Full-featured Telegram bot skill for ZeroClaw.
 
 ## Install
 ```bash
-zeroclaw skill install telegram-assistant
+zeroclaw skills install telegram-assistant
 ```

@@ -1,5 +1,5 @@
 # self-improving-agent
 
 ```bash
-zeroclaw skill install self-improving-agent
+zeroclaw skills install self-improving-agent
 ```

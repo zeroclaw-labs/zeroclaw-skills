@@ -1,5 +1,5 @@
 # doc-writer
 
 ```bash
-zeroclaw skill install doc-writer
+zeroclaw skills install doc-writer
 ```

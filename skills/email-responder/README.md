@@ -1,5 +1,5 @@
 # email-responder
 
 ```bash
-zeroclaw skill install email-responder
+zeroclaw skills install email-responder
 ```

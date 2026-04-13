@@ -1,5 +1,5 @@
 # knowledge-base
 
 ```bash
-zeroclaw skill install knowledge-base
+zeroclaw skills install knowledge-base
 ```

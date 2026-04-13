@@ -1,5 +1,5 @@
 # multi-agent-router
 
 ```bash
-zeroclaw skill install multi-agent-router
+zeroclaw skills install multi-agent-router
 ```
