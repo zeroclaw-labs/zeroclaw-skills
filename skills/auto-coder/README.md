@@ -10,7 +10,7 @@ Autonomous code generation agent for ZeroClaw.
 
 ## Install
 ```bash
-zeroclaw skill install auto-coder
+zeroclaw skills install auto-coder
 ```
 
 ## Permissions

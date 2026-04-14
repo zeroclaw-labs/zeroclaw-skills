@@ -5,7 +5,7 @@ Official skill registry for [ZeroClaw](https://www.zeroclawlabs.ai) — communit
 ## Install a skill
 
 ```bash
-zeroclaw skill install <skill-name>
+zeroclaw skills install <skill-name>
 ```
 
 ## Browse skills
@@ -108,7 +108,7 @@ You are a [role]. When given a task:
 Documentation for users browsing the registry. Include:
 
 - What the skill does
-- Install command (`zeroclaw skill install my-skill`)
+- Install command (`zeroclaw skills install my-skill`)
 - What permissions it needs and why
 - Example usage
 

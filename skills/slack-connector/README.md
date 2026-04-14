@@ -1,5 +1,5 @@
 # slack-connector
 
 ```bash
-zeroclaw skill install slack-connector
+zeroclaw skills install slack-connector
 ```

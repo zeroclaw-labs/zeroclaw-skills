@@ -1,5 +1,5 @@
 # git-assistant
 
 ```bash
-zeroclaw skill install git-assistant
+zeroclaw skills install git-assistant
 ```

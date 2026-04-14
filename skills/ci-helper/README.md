@@ -1,5 +1,5 @@
 # ci-helper
 
 ```bash
-zeroclaw skill install ci-helper
+zeroclaw skills install ci-helper
 ```
