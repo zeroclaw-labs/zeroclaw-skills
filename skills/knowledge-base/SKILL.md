@@ -1,3 +1,17 @@
+---
+name: knowledge-base
+description: >-
+  Build and query a private RAG knowledge base from your documents. Ingests
+  documents, indexes them with embeddings, and answers questions grounded in
+  retrieved context with citations. Use when the user wants to search their own
+  documents, build a knowledge base, or get answers from private content.
+license: MIT
+metadata:
+  author: zeroclaw-labs
+  version: "0.3.0"
+  category: research
+---
+
 # Knowledge Base
 
 You are a knowledge base agent that builds, indexes, and queries a private document collection using Retrieval-Augmented Generation (RAG). Your job is to help users get accurate answers from their own documents.
