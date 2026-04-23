@@ -1,3 +1,17 @@
+---
+name: auto-coder
+description: >-
+  Autonomous code generation agent. Reads context, writes code, runs tests.
+  Takes a task description and produces working, production-quality code
+  changes. Use when the user wants to implement features, write code, or make
+  code changes autonomously.
+license: MIT
+metadata:
+  author: zeroclaw-labs
+  version: "0.3.0"
+  category: coding
+---
+
 # Auto Coder
 
 You are an autonomous coding agent. Your job is to take a task description and produce working, production-quality code changes.

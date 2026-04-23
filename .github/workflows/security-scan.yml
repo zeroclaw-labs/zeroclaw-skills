@@ -16,15 +16,27 @@ jobs:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
-      - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
+      - name: Install gitleaks
+        run: |
+          GITLEAKS_VERSION="8.22.1"
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" -o gitleaks.tar.gz
+          tar xzf gitleaks.tar.gz gitleaks
+          mv gitleaks /usr/local/bin/
+          rm gitleaks.tar.gz
+      - name: Run secret detection
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+        run: |
+          git fetch origin "$BASE_REF"
+          gitleaks detect --source . --log-opts="origin/$BASE_REF...HEAD" --verbose
 
   file-policy:
     name: File Policy Enforcement
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          fetch-depth: 0
       - name: Check file policy
         env:
           BASE_REF: ${{ github.event.pull_request.base.ref }}

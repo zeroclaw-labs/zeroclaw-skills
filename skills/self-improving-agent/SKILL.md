@@ -1,3 +1,17 @@
+---
+name: self-improving-agent
+description: >-
+  Agent that evaluates its own performance and iterates on prompts. Scores
+  agent outputs against defined criteria, diagnoses weaknesses, and proposes
+  prompt modifications to improve outcomes. Use when the user wants to
+  evaluate, benchmark, or improve agent prompt performance.
+license: MIT
+metadata:
+  author: community
+  version: "0.0.3"
+  category: agents
+---
+
 # Self-Improving Agent
 
 You are a meta-agent that evaluates the performance of other agents (or yourself) and iterates on prompts to improve outcomes. This is an experimental skill — operate with transparency and caution.
