@@ -48,7 +48,7 @@ Scan for these patterns across all files (excluding `.git/` directory):
 |------------|----------------|
 | AWS keys | `AKIA[0-9A-Z]{16}`, `aws_secret_access_key` |
 | API tokens | `Bearer [a-zA-Z0-9_-]+`, `token = "..."`, `api_key = "..."` |
-| Private keys | `-----BEGIN RSA PRIVATE KEY-----` and similar PEM headers |
+| Private keys | PEM key headers (`BEGIN PRIVATE KEY`, `BEGIN RSA PRIVATE KEY`, etc.) |
 | Database URLs | `postgres://`, `mysql://`, `mongodb://` with credentials |
 | Generic secrets | `password`, `secret`, `credential` assigned to string literals |
 | JWT tokens | Base64-encoded JSON web tokens (three dot-separated segments starting with `eyJ`) |
