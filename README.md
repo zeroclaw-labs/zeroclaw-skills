@@ -1,6 +1,6 @@
 # ZeroClaw Skills
 
-Official skill registry for [ZeroClaw](https://www.zeroclawlabs.ai) — community-contributed AI agent skills, tools, and workflows.
+Official skill registry for [ZeroClaw](https://www.zeroclawlabs.ai) — community-contributed AI agent skills, tools, and workflows. Skills follow the [agentskills.io](https://agentskills.io/specification) open specification.
 
 ## Install a skill
 
@@ -29,12 +29,12 @@ cd zeroclaw-skills
 
 ```
 skills/my-skill/
-├── manifest.toml   # Required — metadata
-├── SKILL.md        # Required — agent instructions/prompt
+├── manifest.toml   # Required — internal metadata
+├── SKILL.md        # Required — YAML frontmatter + agent instructions
 └── README.md       # Required — documentation for users
 ```
 
-Your folder name **must** match the `name` field in `manifest.toml`.
+Your folder name **must** match the `name` field in both `manifest.toml` and the `SKILL.md` frontmatter.
 
 ### Step 3 — Write `manifest.toml`
 
@@ -87,9 +87,47 @@ Only request what your skill actually needs. Dangerous combinations are blocked 
 
 ### Step 4 — Write `SKILL.md`
 
-This is the prompt/instructions that ZeroClaw feeds to the AI agent when your skill is activated. Write clear, specific instructions.
+`SKILL.md` must start with YAML frontmatter followed by the agent instructions. This follows the [agentskills.io specification](https://agentskills.io/specification).
+
+#### Frontmatter
 
 ```markdown
+---
+name: my-skill
+description: >-
+  What your skill does and when to use it. Include keywords that help
+  agents identify relevant tasks.
+license: MIT
+metadata:
+  author: your-github-username
+  version: "0.1.0"
+  category: tools
+---
+```
+
+| Field | Required | Notes |
+|-------|----------|-------|
+| `name` | Yes | Lowercase, hyphens only. Must match the folder name. Max 64 chars. |
+| `description` | Yes | What it does + when to trigger it. Max 1024 chars. |
+| `license` | No | SPDX identifier or reference to a bundled license file. |
+| `metadata` | No | Arbitrary key-value pairs (author, version, category, etc.). |
+
+#### Instructions body
+
+Below the frontmatter, write the prompt/instructions that ZeroClaw feeds to the AI agent when your skill is activated.
+
+```markdown
+---
+name: my-skill
+description: >-
+  Brief description of what the skill does and when to use it.
+license: MIT
+metadata:
+  author: your-github-username
+  version: "0.1.0"
+  category: tools
+---
+
 # My Skill
 
 You are a [role]. When given a task:
