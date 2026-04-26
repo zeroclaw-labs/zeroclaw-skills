@@ -160,6 +160,16 @@
       "tags": ["Official"],
       "downloads": 2543,
       "stars": 131
+    },
+    {
+      "name": "model-evaluator",
+      "version": "0.1.0",
+      "author": "jesaikailash",
+      "description": "Monitor LLM outputs in production. Score quality, detect drift, and alert on degradation across any channel.",
+      "category": "agents",
+      "tags": ["Community"],
+      "downloads": 0,
+      "stars": 0
     }
   ]
 }
