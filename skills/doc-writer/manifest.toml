@@ -2,7 +2,7 @@
 name = "doc-writer"
 version = "0.2.0"
 author = "zeroclaw-labs"
-description = "Generate documentation from code. Supports Markdown, RST, and JSDoc."
+description = "Generate documentation from code. Supports Markdown, RST, and JSDoc. Reads source code and produces clear, accurate, maintainable documentation in the format appropriate to the project. Use when the user wants documentation, docstrings, README files, or API references generated from code."
 category = "writing"
 tags = ["Official"]
 license = "MIT"

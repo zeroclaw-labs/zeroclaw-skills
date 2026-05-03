@@ -2,7 +2,7 @@
 name = "security-scanner"
 version = "0.1.1"
 author = "community"
-description = "Scan repos for vulnerabilities, secrets, and dependency issues."
+description = "Scan repos for vulnerabilities, secrets, and dependency issues. Analyzes repositories for exposed credentials, known CVEs, OWASP Top 10 code vulnerabilities, and security misconfigurations. Use when the user wants a security audit, secret scanning, or dependency vulnerability check."
 category = "security"
 tags = ["Community"]
 license = "MIT"
