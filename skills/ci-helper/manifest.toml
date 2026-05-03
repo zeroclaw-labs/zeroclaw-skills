@@ -2,7 +2,7 @@
 name = "ci-helper"
 version = "0.1.0"
 author = "community"
-description = "Monitor CI/CD pipelines, diagnose failures, suggest fixes."
+description = "Monitor CI/CD pipelines, diagnose failures, suggest fixes. Analyzes build logs to identify root causes, classifies failure types, and recommends specific fixes. Use when a pipeline fails, builds are slow, or the user needs CI/CD troubleshooting."
 category = "devops"
 tags = ["Community"]
 license = "MIT"

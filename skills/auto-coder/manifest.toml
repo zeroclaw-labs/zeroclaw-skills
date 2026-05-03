@@ -2,7 +2,7 @@
 name = "auto-coder"
 version = "0.3.0"
 author = "zeroclaw-labs"
-description = "Autonomous code generation agent. Reads context, writes code, runs tests."
+description = "Autonomous code generation agent. Reads context, writes code, runs tests. Takes a task description and produces working, production-quality code changes. Use when the user wants to implement features, write code, or make code changes autonomously."
 category = "coding"
 tags = ["Official", "Featured"]
 license = "MIT"

@@ -2,7 +2,7 @@
 name = "web-researcher"
 version = "0.2.1"
 author = "zeroclaw-labs"
-description = "Deep web research with source citation. Summarizes findings privately."
+description = "Deep web research with source citation. Summarizes findings privately. Finds, evaluates, and synthesizes information from the web, delivering accurate, well-sourced answers. Use when the user wants to research a topic, find information online, or compare technologies."
 category = "research"
 tags = ["Official"]
 license = "MIT"
