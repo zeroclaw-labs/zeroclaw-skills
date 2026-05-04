@@ -1,6 +1,19 @@
-# ZeroClaw Skills
+# ZeroClaw Skills Index
 
-Official skill registry for [ZeroClaw](https://www.zeroclawlabs.ai) — community-contributed AI agent skills, tools, and workflows. Skills follow the [agentskills.io](https://agentskills.io/specification) open specification.
+A skill registry for [ZeroClaw](https://www.zeroclawlabs.ai) — AI agent skills, tools, and workflows. Skills follow the [agentskills.io](https://agentskills.io/specification) open specification.
+
+## What we audit, what we don't
+
+This registry is **not a vetted security boundary**. CI runs structure validation and pattern-matching scans (secret detection, dangerous-shape regexes, file-policy checks) on every PR. We do **not** audit skill code for security or correctness, and pattern matching does not catch novel or obfuscated misuse. Runtime behavior — network calls, package installs, files written, commands run — is the user's responsibility to evaluate before installing.
+
+Run `zeroclaw skills audit <name>` and read the skill's `SKILL.md` and `manifest.toml` before installing anything you don't recognize.
+
+## Trust tiers
+
+The `tags` field in `registry.json` carries the trust signal:
+
+- **`Official`** — authored and maintained by `zeroclaw-labs`. Same contribution rules as everything else, but the author is us.
+- **`Community`** — submissions from external contributors. The registry lists them and CI checks structure; we make **no representation** about the author's identity, intent, or the skill's runtime behavior. Treat them as you would any third-party code.
 
 ## Install a skill
 
@@ -16,7 +29,7 @@ Visit the [Skills Hub](https://www.zeroclawlabs.ai/skills) to search and discove
 
 ## Contributing a skill
 
-Anyone can publish a skill. Fork this repo, add your skill, and open a pull request. Two automated CI checks (structure validation + security scanning) must pass before a maintainer reviews.
+Anyone can publish a skill. Fork this repo, add your skill, and open a pull request. Two automated CI checks (structure validation + pattern-matching scans) must pass before a maintainer reviews. Passing CI is a baseline filter, not an endorsement of the skill's runtime behavior — see [What we audit, what we don't](#what-we-audit-what-we-dont).
 
 ### Step 1 — Fork & clone
 
