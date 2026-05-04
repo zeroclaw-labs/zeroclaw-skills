@@ -160,6 +160,16 @@
       "tags": ["Official"],
       "downloads": 2543,
       "stars": 131
+    },
+    {
+      "name": "inboxapi",
+      "version": "0.1.0",
+      "author": "vish-dini",
+      "description": "Operate an InboxAPI mailbox from ZeroClaw through the official InboxAPI CLI.",
+      "category": "chat",
+      "tags": ["Community", "InboxAPI"],
+      "downloads": 0,
+      "stars": 0
     }
   ]
 }
