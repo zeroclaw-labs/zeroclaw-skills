@@ -204,6 +204,35 @@ Both checks must pass. If a check fails, a comment will explain what went wrong.
 
 ---
 
+## Reporting a malicious or compromised skill
+
+This is a removal and advisory process, not a vetting process. Skills are scanned at PR time but not continuously audited. If a published skill is acting maliciously — for example, exfiltrating data, executing unexpected shell commands, or fetching and running remote code at runtime — please report it.
+
+### How to report
+
+Open a GitHub Issue in this repo with a title prefixed `[security]` followed by the skill name, e.g. `[security] my-skill`. Include the skill version, what you observed, and any logs or reproduction steps you can share.
+
+### What we'll do
+
+- Triage within 48 hours of the report being filed.
+- On confirmation, remove the skill from `registry.json` immediately.
+- Move the skill directory to `archive/<name>-<sha>/`, where `<sha>` is the commit being archived.
+- File a security advisory via this repo's Security tab.
+
+### What we won't do
+
+- Conduct forensic analysis of compromised contributor accounts.
+- Contact upstream services (package registries, hosting providers, etc.) on a user's behalf.
+- Guarantee a response time outside the stated 48-hour triage window.
+
+### What users can do
+
+- Pin skill versions when installing: `zeroclaw skills install <name>@<version>`.
+- Run `zeroclaw skills audit` before installing a new skill.
+- Watch this repo's Security tab for advisories.
+
+---
+
 ## License
 
 MIT
