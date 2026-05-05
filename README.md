@@ -52,6 +52,8 @@ permissions = ["file_read"]
 
 **Required fields:** `name`, `version`, `author`, `description`, `category`, `license`
 
+> **About `author = "community"`:** A handful of legacy entries in `registry.json` carry `"community"` as the author. These are placeholder values for skills whose original contributor couldn't be resolved from git history, and they are being phased out as new community-authored skills replace them. New contributions must use a real GitHub login — the placeholder is not accepted for new submissions.
+
 #### Categories
 
 | Category | Description |
