@@ -72,16 +72,6 @@
       "stars": 71
     },
     {
-      "name": "security-scanner",
-      "version": "0.1.1",
-      "author": "community",
-      "description": "Scan repos for vulnerabilities, secrets, and dependency issues.",
-      "category": "security",
-      "tags": ["Community"],
-      "downloads": 876,
-      "stars": 62
-    },
-    {
       "name": "api-tester",
       "version": "0.1.0",
       "author": "community",
@@ -100,16 +90,6 @@
       "tags": ["Official", "Featured"],
       "downloads": 2087,
       "stars": 134
-    },
-    {
-      "name": "ci-helper",
-      "version": "0.1.0",
-      "author": "community",
-      "description": "Monitor CI/CD pipelines, diagnose failures, suggest fixes.",
-      "category": "devops",
-      "tags": ["Community"],
-      "downloads": 521,
-      "stars": 29
     },
     {
       "name": "email-responder",
