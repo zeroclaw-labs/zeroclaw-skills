@@ -52,6 +52,16 @@
       "stars": 119
     },
     {
+      "name": "zeroclaw-simplify-review",
+      "version": "0.1.0",
+      "author": "zeroclaw-labs",
+      "description": "ZeroClaw-specific simplify preflight. Checks reuse, known project pitfalls, and avoidable complexity before commit or maintainer review.",
+      "category": "coding",
+      "tags": ["Official"],
+      "downloads": 0,
+      "stars": 0
+    },
+    {
       "name": "data-analyst",
       "version": "0.1.0",
       "author": "community",
