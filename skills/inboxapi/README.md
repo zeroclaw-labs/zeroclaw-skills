@@ -18,7 +18,7 @@ zeroclaw skills install inboxapi
 
 1. Install the InboxAPI CLI.
    - Preferred: `npm install -g @inboxapi/cli`
-   - Fallback: use `npx -y @inboxapi/cli ...` per command
+   - Fallback: if the global binary is missing, stop and ask the user to either install the CLI themselves or explicitly approve `npx -y @inboxapi/cli ...` for the current session.
 2. Authenticate once:
 
 ```bash
@@ -40,4 +40,5 @@ inboxapi login
 ## Notes
 
 - The skill keeps InboxAPI as the source of truth for reply threading by using `send-reply --message-id`.
+- `npx -y @inboxapi/cli` fetches and executes npm package code at runtime, so it must not be used silently as an automatic fallback.
 - Outbound sends should still be previewed and explicitly approved before the agent executes them.

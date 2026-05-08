@@ -29,7 +29,7 @@ You are an InboxAPI-aware ZeroClaw operator. Use the InboxAPI CLI as the primary
 
 1. Check whether the InboxAPI CLI is available.
    - Prefer `inboxapi`.
-   - If `inboxapi` is not on `PATH`, fall back to `npx -y @inboxapi/cli`.
+   - If `inboxapi` is not on `PATH`, stop and ask the user to either install/authenticate the CLI themselves or explicitly approve `npx -y @inboxapi/cli ...` for the current session.
 2. Run `whoami` before mailbox work to confirm the current authenticated account.
 3. If authentication is missing or expired, stop and tell the user to run `inboxapi login` or `npx -y @inboxapi/cli login` in a terminal, then resume once they confirm it is done.
 4. Prefer JSON output and parse it. Use `--human` only when a short operator-facing summary is more useful than structured output.
@@ -51,7 +51,7 @@ Use these commands as the default building blocks:
 - `inboxapi get-attachment "<attachment-id>" --output "<path>"`
 - `inboxapi get-addressbook`
 
-If the global binary is unavailable, replace `inboxapi` with `npx -y @inboxapi/cli`.
+If the global binary is unavailable, do not auto-run `npx -y @inboxapi/cli`. Ask for explicit approval first because it fetches and executes npm package code at runtime.
 
 ## Workflow
 
@@ -79,6 +79,7 @@ If the global binary is unavailable, replace `inboxapi` with `npx -y @inboxapi/c
 - Do not include credentials, environment variables, local secrets, or files outside the intended workspace in outgoing email.
 - If a command fails, surface the actual error briefly and either retry with a narrower command or ask the user for the missing identifier.
 - If the user asks for unsupported account-admin operations, explain that the InboxAPI CLI can do them directly but this skill is scoped to operational mailbox work.
+- Treat `npx -y @inboxapi/cli` as a higher-risk, approval-gated fallback rather than a silent substitute for an installed binary.
 
 ## Output expectations
 
