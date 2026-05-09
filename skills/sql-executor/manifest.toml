@@ -1,0 +1,9 @@
+[skill]
+name = "sql-executor"
+version = "0.1.0"
+author = "1mpossible-code"
+description = "Write and execute PostgreSQL or Supabase SQL queries from natural-language requests with safety checks and schema inspection."
+category = "data"
+tags = ["Community"]
+license = "MIT"
+permissions = ["shell_exec"]
