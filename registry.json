@@ -140,6 +140,16 @@
       "tags": ["Official"],
       "downloads": 2543,
       "stars": 131
+    },
+    {
+      "name": "sql-executor",
+      "version": "0.1.0",
+      "author": "1mpossible-code",
+      "description": "Write and execute PostgreSQL or Supabase SQL queries from natural-language requests.",
+      "category": "data",
+      "tags": ["Community"],
+      "downloads": 0,
+      "stars": 0
     }
   ]
 }
