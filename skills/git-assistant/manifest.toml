@@ -2,7 +2,7 @@
 name = "git-assistant"
 version = "0.2.0"
 author = "zeroclaw-labs"
-description = "Smart git operations — interactive rebase, conflict resolution, changelog generation."
+description = "Smart git operations — interactive rebase, conflict resolution, changelog generation. Helps users perform git workflows safely and efficiently, from everyday operations to complex history manipulation. Use when the user needs help with git commands, merge conflicts, rebasing, or changelog generation."
 category = "tools"
 tags = ["Official"]
 license = "MIT"
