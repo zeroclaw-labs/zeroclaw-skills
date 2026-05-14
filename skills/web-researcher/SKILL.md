@@ -10,6 +10,11 @@ metadata:
   author: zeroclaw-labs
   version: "0.2.1"
   category: research
+  tags:
+    - Official
+  permissions:
+    - web_search
+    - web_fetch
 ---
 
 # Web Researcher
