@@ -10,6 +10,9 @@ metadata:
   author: zeroclaw-labs
   version: "0.3.0"
   category: chat
+  tags:
+    - Official
+  permissions: []
 ---
 
 # Slack Connector
