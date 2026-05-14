@@ -10,6 +10,9 @@ metadata:
   author: community
   version: "0.1.0"
   category: data
+  tags:
+    - Community
+  permissions: []
 ---
 
 # Data Analyst
