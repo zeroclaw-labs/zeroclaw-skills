@@ -1,9 +1,0 @@
-[skill]
-name = "knowledge-base"
-version = "0.3.0"
-author = "zeroclaw-labs"
-description = "Build and query a private RAG knowledge base from your documents. Ingests documents, indexes them with embeddings, and answers questions grounded in retrieved context with citations. Use when the user wants to search their own documents, build a knowledge base, or get answers from private content."
-category = "research"
-tags = ["Official", "Featured"]
-license = "MIT"
-permissions = []
