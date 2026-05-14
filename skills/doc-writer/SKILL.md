@@ -10,6 +10,9 @@ metadata:
   author: zeroclaw-labs
   version: "0.2.0"
   category: writing
+  tags:
+    - Official
+  permissions: []
 ---
 
 # Doc Writer
