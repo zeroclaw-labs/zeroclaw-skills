@@ -434,9 +434,8 @@ jobs:
                   errors.append(f"PARSE ERROR in {filepath}: {e}")
                   continue
 
-              md = data.get("metadata") or {}
               name = data.get("name", filepath)
-              perms = set(md.get("permissions") or [])
+              perms = set(data.get("permissions") or [])
 
               has_shell = "shell_exec" in perms
               has_file_write = "file_write" in perms

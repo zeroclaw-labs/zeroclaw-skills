@@ -5,15 +5,14 @@ description: >-
   documents, indexes them with embeddings, and answers questions grounded in
   retrieved context with citations. Use when the user wants to search their own
   documents, build a knowledge base, or get answers from private content.
+version: "0.3.0"
+author: zeroclaw-labs
 license: MIT
-metadata:
-  author: zeroclaw-labs
-  version: "0.3.0"
-  category: research
-  tags:
-    - Official
-    - Featured
-  permissions: []
+category: research
+tags:
+  - Official
+  - Featured
+permissions: []
 ---
 
 # Knowledge Base

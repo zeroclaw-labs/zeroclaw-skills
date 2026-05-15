@@ -5,14 +5,13 @@ description: >-
   Enforces server rules, manages disruptive behavior, detects raids, and
   maintains a healthy community environment. Use when the user needs Discord
   moderation, rule enforcement, or raid protection.
+version: "0.1.2"
+author: community
 license: MIT
-metadata:
-  author: community
-  version: "0.1.2"
-  category: chat
-  tags:
-    - Community
-  permissions: []
+category: chat
+tags:
+  - Community
+permissions: []
 ---
 
 # Discord Moderator

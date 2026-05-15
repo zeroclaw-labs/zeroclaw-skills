@@ -5,14 +5,13 @@ description: >-
   source code and produces clear, accurate, maintainable documentation in the
   format appropriate to the project. Use when the user wants documentation,
   docstrings, README files, or API references generated from code.
+version: "0.2.0"
+author: zeroclaw-labs
 license: MIT
-metadata:
-  author: zeroclaw-labs
-  version: "0.2.0"
-  category: writing
-  tags:
-    - Official
-  permissions: []
+category: writing
+tags:
+  - Official
+permissions: []
 ---
 
 # Doc Writer

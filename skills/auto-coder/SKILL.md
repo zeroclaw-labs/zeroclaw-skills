@@ -5,18 +5,17 @@ description: >-
   Takes a task description and produces working, production-quality code
   changes. Use when the user wants to implement features, write code, or make
   code changes autonomously.
+version: "0.3.0"
+author: zeroclaw-labs
 license: MIT
-metadata:
-  author: zeroclaw-labs
-  version: "0.3.0"
-  category: coding
-  tags:
-    - Official
-    - Featured
-  permissions:
-    - file_read
-    - file_write
-    - shell_exec
+category: coding
+tags:
+  - Official
+  - Featured
+permissions:
+  - file_read
+  - file_write
+  - shell_exec
 ---
 
 # Auto Coder

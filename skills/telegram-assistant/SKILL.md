@@ -5,16 +5,15 @@ description: >-
   Communicates with users through the Telegram Bot API, handles media, manages
   group interactions, and supports inline queries. Use when the user wants to
   interact with Telegram, build a bot, or send Telegram messages.
+version: "0.4.0"
+author: zeroclaw-labs
 license: MIT
-metadata:
-  author: zeroclaw-labs
-  version: "0.4.0"
-  category: chat
-  tags:
-    - Official
-    - Featured
-  permissions:
-    - channel_telegram
+category: chat
+tags:
+  - Official
+  - Featured
+permissions:
+  - channel_telegram
 ---
 
 # Telegram Assistant

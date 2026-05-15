@@ -2,15 +2,14 @@
 name: zeroclaw-simplify-review
 description: >-
   ZeroClaw-specific simplify preflight. Checks reuse, known project pitfalls, and avoidable complexity before commit or maintainer review.
+version: "0.1.0"
+author: zeroclaw-labs
 license: MIT
-metadata:
-  author: zeroclaw-labs
-  version: "0.1.0"
-  category: coding
-  tags:
-    - Official
-  permissions:
-    - file_read
+category: coding
+tags:
+  - Official
+permissions:
+  - file_read
 ---
 
 # ZeroClaw Simplify Review

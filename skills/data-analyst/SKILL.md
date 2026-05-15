@@ -5,14 +5,13 @@ description: >-
   explores, transforms, and visualizes structured data to deliver clear,
   actionable insights. Use when the user wants data analysis, visualization,
   statistical summaries, or anomaly detection.
+version: "0.1.0"
+author: community
 license: MIT
-metadata:
-  author: community
-  version: "0.1.0"
-  category: data
-  tags:
-    - Community
-  permissions: []
+category: data
+tags:
+  - Community
+permissions: []
 ---
 
 # Data Analyst

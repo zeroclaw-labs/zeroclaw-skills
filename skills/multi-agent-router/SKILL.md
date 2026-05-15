@@ -5,14 +5,13 @@ description: >-
   Classifies incoming tasks and dispatches them to the most appropriate agent.
   Use when the user has a task that needs to be analyzed and routed to the
   right specialist agent.
+version: "0.2.1"
+author: zeroclaw-labs
 license: MIT
-metadata:
-  author: zeroclaw-labs
-  version: "0.2.1"
-  category: agents
-  tags:
-    - Official
-  permissions: []
+category: agents
+tags:
+  - Official
+permissions: []
 ---
 
 # Multi-Agent Router

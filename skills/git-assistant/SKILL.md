@@ -5,14 +5,13 @@ description: >-
   generation. Helps users perform git workflows safely and efficiently, from
   everyday operations to complex history manipulation. Use when the user needs
   help with git commands, merge conflicts, rebasing, or changelog generation.
+version: "0.2.0"
+author: zeroclaw-labs
 license: MIT
-metadata:
-  author: zeroclaw-labs
-  version: "0.2.0"
-  category: tools
-  tags:
-    - Official
-  permissions: []
+category: tools
+tags:
+  - Official
+permissions: []
 ---
 
 # Git Assistant

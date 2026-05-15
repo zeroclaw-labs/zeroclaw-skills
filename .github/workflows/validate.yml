@@ -47,6 +47,8 @@ jobs:
           import yaml, os, re, sys
 
           errors = 0
+          required = ["name", "description", "version", "author", "license", "category"]
+          list_fields = ["tags", "permissions"]
 
           VALID_LICENSES = {
               "MIT", "Apache-2.0", "CC-BY-4.0", "CC-BY-SA-4.0", "CC0-1.0",
@@ -65,32 +67,27 @@ jobs:
                       errors += 1
                       continue
                   data = yaml.safe_load(m.group(1)) or {}
-                  md = data.get("metadata") or {}
 
-                  for field in ("name", "description"):
+                  if "metadata" in data:
+                      print(f"ERROR: {skill_dir}/SKILL.md uses 'metadata:' sub-block — fields must be at top level")
+                      errors += 1
+
+                  for field in required:
                       if not data.get(field):
                           print(f"ERROR: {skill_dir}/SKILL.md missing top-level '{field}'")
+                          errors += 1
+
+                  for field in list_fields:
+                      if field not in data or not isinstance(data.get(field), list):
+                          print(f"ERROR: {skill_dir}/SKILL.md '{field}' must be a top-level YAML list")
                           errors += 1
 
                   if data.get("name") != skill_dir:
                       print(f"ERROR: {skill_dir} name mismatch: frontmatter says '{data.get('name')}'")
                       errors += 1
 
-                  for field in ("author", "version", "category"):
-                      if not md.get(field):
-                          print(f"ERROR: {skill_dir}/SKILL.md missing 'metadata.{field}'")
-                          errors += 1
-
-                  for field in ("tags", "permissions"):
-                      if field not in md or not isinstance(md.get(field), list):
-                          print(f"ERROR: {skill_dir}/SKILL.md 'metadata.{field}' must be a list")
-                          errors += 1
-
                   license_val = data.get("license") or ""
-                  if not license_val:
-                      print(f"ERROR: {skill_dir}/SKILL.md missing 'license' field")
-                      errors += 1
-                  elif license_val not in VALID_LICENSES:
+                  if license_val and license_val not in VALID_LICENSES:
                       print(f"ERROR: {skill_dir} invalid license '{license_val}' — allowed: {sorted(VALID_LICENSES)}")
                       errors += 1
               except Exception as e:

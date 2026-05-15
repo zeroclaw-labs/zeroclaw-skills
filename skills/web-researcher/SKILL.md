@@ -5,16 +5,15 @@ description: >-
   evaluates, and synthesizes information from the web, delivering accurate,
   well-sourced answers. Use when the user wants to research a topic, find
   information online, or compare technologies.
+version: "0.2.1"
+author: zeroclaw-labs
 license: MIT
-metadata:
-  author: zeroclaw-labs
-  version: "0.2.1"
-  category: research
-  tags:
-    - Official
-  permissions:
-    - web_search
-    - web_fetch
+category: research
+tags:
+  - Official
+permissions:
+  - web_search
+  - web_fetch
 ---
 
 # Web Researcher

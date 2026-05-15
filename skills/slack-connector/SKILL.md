@@ -5,14 +5,13 @@ description: >-
   Interacts with Slack workspaces on behalf of the user — sending messages,
   responding to commands, managing threads, and sharing files. Use when the
   user wants to send Slack messages, manage channels, or integrate with Slack.
+version: "0.3.0"
+author: zeroclaw-labs
 license: MIT
-metadata:
-  author: zeroclaw-labs
-  version: "0.3.0"
-  category: chat
-  tags:
-    - Official
-  permissions: []
+category: chat
+tags:
+  - Official
+permissions: []
 ---
 
 # Slack Connector

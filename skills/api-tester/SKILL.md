@@ -5,14 +5,13 @@ description: >-
   GraphQL APIs by sending requests, validating responses against schemas,
   checking edge cases, and reporting failures clearly. Use when the user wants
   to test APIs, validate endpoints, run load tests, or check schema compliance.
+version: "0.1.0"
+author: community
 license: MIT
-metadata:
-  author: community
-  version: "0.1.0"
-  category: devops
-  tags:
-    - Community
-  permissions: []
+category: devops
+tags:
+  - Community
+permissions: []
 ---
 
 # API Tester

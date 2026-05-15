@@ -5,14 +5,13 @@ description: >-
   emails, understands context and tone, and drafts appropriate replies that
   match the sender's communication style. Use when the user wants to draft
   email replies, respond to messages, or compose professional correspondence.
+version: "0.1.1"
+author: community
 license: MIT
-metadata:
-  author: community
-  version: "0.1.1"
-  category: chat
-  tags:
-    - Community
-  permissions: []
+category: chat
+tags:
+  - Community
+permissions: []
 ---
 
 # Email Responder

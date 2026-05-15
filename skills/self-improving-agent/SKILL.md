@@ -5,15 +5,14 @@ description: >-
   agent outputs against defined criteria, diagnoses weaknesses, and proposes
   prompt modifications to improve outcomes. Use when the user wants to
   evaluate, benchmark, or improve agent prompt performance.
+version: "0.0.3"
+author: community
 license: MIT
-metadata:
-  author: community
-  version: "0.0.3"
-  category: agents
-  tags:
-    - Community
-    - Experimental
-  permissions: []
+category: agents
+tags:
+  - Community
+  - Experimental
+permissions: []
 ---
 
 # Self-Improving Agent

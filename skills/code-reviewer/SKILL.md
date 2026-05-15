@@ -5,14 +5,13 @@ description: >-
   Analyzes code changes, diffs, or pull requests and provides actionable,
   prioritized feedback. Use when the user wants a code review, wants to check
   code quality, or needs feedback on a diff or PR.
+version: "0.2.0"
+author: zeroclaw-labs
 license: MIT
-metadata:
-  author: zeroclaw-labs
-  version: "0.2.0"
-  category: coding
-  tags:
-    - Official
-  permissions: []
+category: coding
+tags:
+  - Official
+permissions: []
 ---
 
 # Code Reviewer

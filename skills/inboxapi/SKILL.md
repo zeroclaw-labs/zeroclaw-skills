@@ -5,16 +5,15 @@ description: >-
   Use when the user wants the agent to search mail, read messages or threads,
   send new email, forward mail, inspect attachments, or reply in-thread while
   preserving InboxAPI as the source of truth for email delivery and threading.
+version: "0.1.0"
+author: vish-dini
 license: MIT
-metadata:
-  author: vish-dini
-  version: "0.1.0"
-  category: chat
-  tags:
-    - Community
-    - InboxAPI
-  permissions:
-    - shell_exec
+category: chat
+tags:
+  - Community
+  - InboxAPI
+permissions:
+  - shell_exec
 ---
 
 # InboxAPI

@@ -85,7 +85,7 @@ Only request what your skill actually needs. Dangerous combinations are blocked 
 
 ### Step 3 — Write `SKILL.md`
 
-`SKILL.md` is the single source of metadata. It starts with YAML frontmatter followed by the agent instructions, per the [agentskills.io specification](https://agentskills.io/specification).
+`SKILL.md` is the single source of metadata. It starts with YAML frontmatter followed by the agent instructions, per the [agentskills.io specification](https://agentskills.io/specification). All fields live at the top level of the YAML — no `metadata:` sub-block.
 
 #### Frontmatter
 
@@ -95,28 +95,27 @@ name: my-skill
 description: >-
   What your skill does and when to use it. Include keywords that help
   agents identify relevant tasks.
+version: "0.1.0"
+author: your-github-username
 license: MIT
-metadata:
-  author: your-github-username
-  version: "0.1.0"
-  category: tools
-  tags:
-    - Community
-  permissions:
-    - file_read
+category: tools
+tags:
+  - Community
+permissions:
+  - file_read
 ---
 ```
 
 | Field | Required | Notes |
 |-------|----------|-------|
 | `name` | Yes | Lowercase, hyphens only. Must match the folder name. Max 64 chars. |
-| `description` | Yes | What it does + when to trigger it. Max 1024 chars. |
+| `description` | Yes | What it does + when to trigger it. Max 1024 chars. Use `>-` for multi-line. |
+| `version` | Yes | Semver string, quoted (e.g. `"0.1.0"`). |
+| `author` | Yes | Your GitHub username (or `community` for legacy entries — see note above). |
 | `license` | Yes | SPDX identifier from the accepted list above. |
-| `metadata.author` | Yes | Your GitHub username (or `community` for legacy entries — see note above). |
-| `metadata.version` | Yes | Semver string, quoted (e.g. `"0.1.0"`). |
-| `metadata.category` | Yes | One of the categories above. |
-| `metadata.tags` | Yes | Trust tier (`Official` / `Community`) plus optional extras like `Featured` or `Experimental`. |
-| `metadata.permissions` | Yes | List of permissions the skill needs. Use `[]` if none. |
+| `category` | Yes | One of the categories above. |
+| `tags` | Yes | YAML list. Trust tier (`Official` / `Community`) plus optional extras like `Featured` or `Experimental`. |
+| `permissions` | Yes | YAML list of permissions the skill needs. Use `[]` if none. |
 
 #### Instructions body
 
@@ -127,15 +126,14 @@ Below the frontmatter, write the prompt/instructions that ZeroClaw feeds to the 
 name: my-skill
 description: >-
   Brief description of what the skill does and when to use it.
+version: "0.1.0"
+author: your-github-username
 license: MIT
-metadata:
-  author: your-github-username
-  version: "0.1.0"
-  category: tools
-  tags:
-    - Community
-  permissions:
-    - file_read
+category: tools
+tags:
+  - Community
+permissions:
+  - file_read
 ---
 
 # My Skill
@@ -196,7 +194,7 @@ Two CI workflows run automatically:
 ### Validation (`validate.yml`)
 - `registry.json` is valid JSON
 - Every skill folder has a non-empty `SKILL.md` with valid YAML frontmatter
-- All required frontmatter fields are present (`name`, `description`, `license`, and `metadata.{author,version,category,tags,permissions}`)
+- All required top-level frontmatter fields are present (`name`, `description`, `version`, `author`, `license`, `category`, `tags`, `permissions`)
 - `license` is a valid SPDX identifier
 - Folder names match the frontmatter `name` field
 - `registry.json` and `skills/` folders are in sync
