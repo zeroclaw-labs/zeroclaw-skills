@@ -160,6 +160,16 @@
       "tags": ["Community", "InboxAPI"],
       "downloads": 0,
       "stars": 0
+    },
+    {
+      "name": "imans",
+      "version": "1.0.0",
+      "author": "imans-ai",
+      "description": "Use the Imans CLI to query Imans workspace, catalog, product, variant, and sales order data as JSON.",
+      "category": "data",
+      "tags": ["Community", "CLI", "Business", "Catalog", "Sales"],
+      "downloads": 0,
+      "stars": 0
     }
   ]
 }
