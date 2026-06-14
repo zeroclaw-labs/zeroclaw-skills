@@ -115,7 +115,7 @@
       "name": "git-assistant",
       "version": "0.2.0",
       "author": "zeroclaw-labs",
-      "description": "Smart git operations — interactive rebase, conflict resolution, changelog generation.",
+      "description": "Smart git operations - interactive rebase, conflict resolution, changelog generation.",
       "category": "tools",
       "tags": ["Official"],
       "downloads": 1876,
@@ -158,6 +158,16 @@
       "description": "Operate an InboxAPI mailbox from ZeroClaw through the official InboxAPI CLI.",
       "category": "chat",
       "tags": ["Community", "InboxAPI"],
+      "downloads": 0,
+      "stars": 0
+    },
+    {
+      "name": "x-twitter-scraper",
+      "version": "0.1.0",
+      "author": "kriptoburak",
+      "description": "Use Xquik for X/Twitter data workflows through public docs, REST API, MCP, webhooks, and SDKs.",
+      "category": "data",
+      "tags": ["Community", "X", "Twitter", "MCP"],
       "downloads": 0,
       "stars": 0
     }
