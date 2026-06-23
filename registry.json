@@ -160,6 +160,16 @@
       "tags": ["Community", "InboxAPI"],
       "downloads": 0,
       "stars": 0
+    },
+    {
+      "name": "x-twitter-scraper",
+      "version": "0.1.0",
+      "author": "kriptoburak",
+      "description": "Use Xquik for X/Twitter data workflows through public docs, REST API, MCP, webhooks, and SDKs.",
+      "category": "data",
+      "tags": ["Community", "X", "Twitter", "MCP"],
+      "downloads": 0,
+      "stars": 0
     }
   ]
 }
