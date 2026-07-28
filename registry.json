@@ -180,6 +180,16 @@
       "tags": ["Community"],
       "downloads": 0,
       "stars": 0
+    },
+    {
+      "name": "knowledge-graph",
+      "version": "0.1.0",
+      "author": "timburman",
+      "description": "Extract knowledge graphs, entity relationships, and dependency maps using Graphifyy and Tree-sitter AST parsing.",
+      "category": "research",
+      "tags": ["Community"],
+      "downloads": 0,
+      "stars": 0
     }
   ]
 }
