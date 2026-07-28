@@ -31,18 +31,20 @@ graphify --version
 ```
 
 - **If `graphify` is installed**: Use `graphify` as the primary engine for high-speed, local AST-based codebase graph building.
+  - For code-only parsing without LLM API keys: `graphify . --code-only`
+  - For full semantic parsing (code + docs): `graphify .` (requires `GEMINI_API_KEY`, `OPENAI_API_KEY`, or `ANTHROPIC_API_KEY`).
 - **If `graphify` is missing**: Inform the user that running `pip install graphifyy` or `uv tool install graphifyy` unlocks deterministic code parsing and interactive HTML visualization (`graphify-out/graph.html`). Offer to proceed using prompt-based LLM entity-relationship extraction.
 
 ### 2. IDE & Agent Integration
 If operating inside supported IDEs or agent shells (e.g. Antigravity, Cursor, Claude Code, Codex):
-- Instruct the user that `graphify <assistant> install` (e.g. `graphify cursor install` or `graphify antigravity install`) can be executed to register graph context rules natively.
+- Instruct the user that `graphify <assistant> install` (e.g. `graphify cursor install` or `graphify antigravity install`) can be executed to register graph context rules natively in their editor.
 
 ### 3. Execution Mode
 
 | Input Type | Parsing Engine | LLM Requirement | Output Artifacts |
 |------------|----------------|-----------------|------------------|
-| **Codebase (Python, JS, TS, Go, Rust, C++, etc.)** | `graphify` CLI + Tree-sitter | None (Deterministic) | `graphify-out/graph.json`, `graphify-out/graph.html`, `graphify-out/GRAPH_REPORT.md` |
-| **Unstructured Documents (PDF, MD, TXT, Docs)** | ZeroClaw Active Model | Required for Entity/Rel Extraction | JSON Graph schema, Mermaid diagram, Provenance table |
+| **Codebase (Python, JS, TS, Go, Rust, C++, etc.)** | `graphify . --code-only` + Tree-sitter | None (Deterministic AST) | `graphify-out/graph.json`, `graphify-out/graph.html`, `graphify-out/GRAPH_REPORT.md` |
+| **Unstructured Documents (PDF, MD, TXT, Docs)** | ZeroClaw Active Model or `graphify .` | ZeroClaw Active LLM | JSON Graph schema, Mermaid diagram, Provenance table |
 
 ---
 
@@ -50,7 +52,7 @@ If operating inside supported IDEs or agent shells (e.g. Antigravity, Cursor, Cl
 
 ### Workflow 1: Build & Index Codebase Graph
 1. Navigate to the project root directory.
-2. Run `graphify .` (or `graphify <target-directory>`).
+2. Run `graphify .` (or `graphify . --code-only` for keyless AST mode).
 3. Confirm creation of `graphify-out/` outputs:
    - `graph.json` — Machine-readable node/edge schema.
    - `GRAPH_REPORT.md` — Architectural report highlighting God Nodes and community clusters.
