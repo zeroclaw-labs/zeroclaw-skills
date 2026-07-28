@@ -31,19 +31,22 @@ graphify --version
 ```
 
 - **If `graphify` is installed**: Use `graphify` as the primary engine for high-speed, local AST-based codebase graph building.
-  - For code-only parsing without LLM API keys: `graphify . --code-only`
-  - For full semantic parsing (code + docs): `graphify .` (requires `GEMINI_API_KEY`, `OPENAI_API_KEY`, or `ANTHROPIC_API_KEY`).
+  - **Keyless Code-only AST Extraction**:
+    1. Run `graphify . --code-only` to index code structures locally via Tree-sitter.
+    2. Run `graphify cluster-only .` to perform community clustering and generate graph docs (`graphify-out/GRAPH_REPORT.md` and `graphify-out/graph.html`).
+  - **Full Semantic Extraction (Code + Docs)**:
+    - Run `graphify .` (requires `GEMINI_API_KEY`, `OPENAI_API_KEY`, or `ANTHROPIC_API_KEY`).
 - **If `graphify` is missing**: Inform the user that running `pip install graphifyy` or `uv tool install graphifyy` unlocks deterministic code parsing and interactive HTML visualization (`graphify-out/graph.html`). Offer to proceed using prompt-based LLM entity-relationship extraction.
 
 ### 2. IDE & Agent Integration
-If operating inside supported IDEs or agent shells (e.g. Antigravity, Cursor, Claude Code, Codex):
-- Instruct the user that `graphify <assistant> install` (e.g. `graphify cursor install` or `graphify antigravity install`) can be executed to register graph context rules natively in their editor.
+If operating inside supported IDEs or agent shells (e.g. Antigravity, Cursor, Claude Code, Codex, VS Code, Devin):
+- Instruct the user that `graphify <assistant> install` (e.g., `graphify antigravity install`, `graphify cursor install`, `graphify claude install`) can be executed to register graph context rules and hooks natively in their environment.
 
 ### 3. Execution Mode
 
 | Input Type | Parsing Engine | LLM Requirement | Output Artifacts |
 |------------|----------------|-----------------|------------------|
-| **Codebase (Python, JS, TS, Go, Rust, C++, etc.)** | `graphify . --code-only` + Tree-sitter | None (Deterministic AST) | `graphify-out/graph.json`, `graphify-out/graph.html`, `graphify-out/GRAPH_REPORT.md` |
+| **Codebase (Python, JS, TS, Go, Rust, C++, etc.)** | `graphify . --code-only` $\rightarrow$ `graphify cluster-only .` | None (Deterministic AST) | `graphify-out/graph.json`, `graphify-out/graph.html`, `graphify-out/GRAPH_REPORT.md` |
 | **Unstructured Documents (PDF, MD, TXT, Docs)** | ZeroClaw Active Model or `graphify .` | ZeroClaw Active LLM | JSON Graph schema, Mermaid diagram, Provenance table |
 
 ---
@@ -52,8 +55,9 @@ If operating inside supported IDEs or agent shells (e.g. Antigravity, Cursor, Cl
 
 ### Workflow 1: Build & Index Codebase Graph
 1. Navigate to the project root directory.
-2. Run `graphify .` (or `graphify . --code-only` for keyless AST mode).
-3. Confirm creation of `graphify-out/` outputs:
+2. Run `graphify . --code-only` to extract AST structures.
+3. Run `graphify cluster-only .` to generate community clusters, god-node reports, and interactive HTML.
+4. Confirm creation of `graphify-out/` outputs:
    - `graph.json` — Machine-readable node/edge schema.
    - `GRAPH_REPORT.md` — Architectural report highlighting God Nodes and community clusters.
    - `graph.html` — Interactive force-directed web visualization.
@@ -67,7 +71,7 @@ When processing non-code documents or when `graphify` CLI is unavailable:
 
 ### Workflow 3: Graph Querying & Structural Analysis
 Given a graph (`graphify-out/graph.json` or extracted JSON):
-- **God Nodes**: Identify nodes with high degree centrality (overly coupled modules/hub entities).
+- **God Nodes**: Identify nodes with high degree centrality (`graphify god-nodes`) to detect overly coupled modules.
 - **Dependency Paths**: Trace directional edges from source node to target node.
 - **Community Detection**: Group tightly clustered sub-graphs into logical domain modules.
 - **Architectural Risk Spotting**: Flag circular dependencies or single points of failure.

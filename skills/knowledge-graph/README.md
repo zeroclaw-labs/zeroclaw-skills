@@ -20,6 +20,16 @@ pip install graphifyy
 uv tool install graphifyy
 ```
 
+## Quick Start Command Pattern
+
+```bash
+# 1. Index local codebase AST without LLM key:
+graphify . --code-only
+
+# 2. Perform community clustering & generate report/docs:
+graphify cluster-only .
+```
+
 ## Capabilities
 
 - **Codebase Knowledge Graphs**: Parse Python, JavaScript, TypeScript, Go, Rust, C++, and more into graph representations.
