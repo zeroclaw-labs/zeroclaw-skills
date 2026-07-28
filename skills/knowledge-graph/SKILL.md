@@ -34,15 +34,24 @@ graphify --version
   - **Keyless Code-only AST Extraction**:
     1. Run `graphify . --code-only` to index code structures locally via Tree-sitter.
     2. Run `graphify cluster-only .` to perform community clustering and generate graph docs (`graphify-out/GRAPH_REPORT.md` and `graphify-out/graph.html`).
-  - **Full Semantic Extraction (Code + Docs)**:
+  - **Full Semantic Extraction (Standard Providers)**:
     - Default provider keys (`GEMINI_API_KEY`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `DEEPSEEK_API_KEY`, `MOONSHOT_API_KEY`).
-  - **Custom / OpenAI-Compatible Providers (NVIDIA NIM, vLLM, Ollama, LiteLLM)**:
-    - Pass `--backend <provider>` (e.g. `graphify . --backend openai` or `graphify . --backend nvidia`).
-    - Reuse ZeroClaw's active LLM credentials by setting environment variables for OpenAI-compatible endpoints:
-      - `OPENAI_BASE_URL` (e.g., `https://integrate.api.nvidia.com/v1` or `http://localhost:8080/v1`)
-      - `OPENAI_MODEL` (e.g., `meta/llama-3.3-70b-instruct`)
-      - `OPENAI_API_KEY` (NVIDIA API key or custom provider key)
-    - Or for Anthropic proxies: set `ANTHROPIC_BASE_URL` and `ANTHROPIC_MODEL`.
+  - **Custom Provider Registration (`graphify provider`)**:
+    - Register custom OpenAI-compatible providers (such as NVIDIA NIM, vLLM, Ollama, LiteLLM) using the `provider` subcommands:
+      ```bash
+      graphify provider add nvidia \
+        --base-url https://integrate.api.nvidia.com/v1 \
+        --default-model minimaxai/minimax-m2.7 \
+        --env-key NVIDIA_API_KEY
+
+      graphify provider list
+      graphify provider show nvidia
+      graphify provider remove nvidia
+      ```
+    - Execute semantic extraction with registered custom provider:
+      ```bash
+      graphify . --backend nvidia
+      ```
 
 - **If `graphify` is missing**: Inform the user that running `pip install graphifyy` or `uv tool install graphifyy` unlocks deterministic code parsing and interactive HTML visualization (`graphify-out/graph.html`). Offer to proceed using prompt-based LLM entity-relationship extraction.
 
@@ -55,7 +64,7 @@ If operating inside supported IDEs or agent shells (e.g. Antigravity, Cursor, Cl
 | Input Type | Parsing Engine | LLM Requirement | Output Artifacts |
 |------------|----------------|-----------------|------------------|
 | **Codebase (Python, JS, TS, Go, Rust, C++, etc.)** | `graphify . --code-only` $\rightarrow$ `graphify cluster-only .` | None (Deterministic AST) | `graphify-out/graph.json`, `graphify-out/graph.html`, `graphify-out/GRAPH_REPORT.md` |
-| **Custom Provider Code + Docs (NVIDIA NIM, vLLM, Ollama)** | `graphify . --backend <provider>` | Custom OpenAI-Compatible LLM Key (`OPENAI_BASE_URL`) | Full Semantic `graphify-out/` Artifacts |
+| **Custom Provider Code + Docs (NVIDIA NIM, vLLM, Ollama)** | `graphify provider add <name>` $\rightarrow$ `graphify . --backend <name>` | Custom LLM Key (e.g., `NVIDIA_API_KEY`) | Full Semantic `graphify-out/` Artifacts |
 | **Unstructured Documents (PDF, MD, TXT, Docs)** | ZeroClaw Active Model or `graphify .` | ZeroClaw Active LLM | JSON Graph schema, Mermaid diagram, Provenance table |
 
 ---
@@ -66,7 +75,7 @@ If operating inside supported IDEs or agent shells (e.g. Antigravity, Cursor, Cl
 1. Navigate to the project root directory.
 2. Check execution mode:
    - For AST-only keyless mode: Run `graphify . --code-only` followed by `graphify cluster-only .`
-   - For custom OpenAI-compatible providers (NVIDIA NIM, etc.): Export `OPENAI_BASE_URL`, `OPENAI_MODEL`, `OPENAI_API_KEY` and run `graphify . --backend <provider>`
+   - For custom providers (NVIDIA NIM, etc.): Register provider with `graphify provider add <name>` and run `graphify . --backend <name>`
 3. Confirm creation of `graphify-out/` outputs:
    - `graph.json` — Machine-readable node/edge schema.
    - `GRAPH_REPORT.md` — Architectural report highlighting God Nodes and community clusters.

@@ -31,21 +31,30 @@ graphify . --code-only
 graphify cluster-only .
 ```
 
-### 2. Custom Provider & OpenAI-Compatible Endpoints (NVIDIA NIM, Ollama, vLLM)
-If using non-standard model providers like NVIDIA NIM, vLLM, or self-hosted endpoints:
+### 2. Custom Provider Registration (e.g., NVIDIA NIM, vLLM, Ollama)
+Register custom OpenAI-compatible providers dynamically with `graphify provider`:
 
 ```bash
-export OPENAI_BASE_URL="https://integrate.api.nvidia.com/v1"
-export OPENAI_MODEL="meta/llama-3.3-70b-instruct"
-export OPENAI_API_KEY="nvapi-..."
+# Add custom provider
+graphify provider add nvidia \
+  --base-url https://integrate.api.nvidia.com/v1 \
+  --default-model minimaxai/minimax-m2.7 \
+  --env-key NVIDIA_API_KEY
 
-graphify . --backend nvidia # or --backend openai
+# Manage providers
+graphify provider list
+graphify provider show nvidia
+graphify provider remove nvidia
+
+# Execute extraction using custom provider
+export NVIDIA_API_KEY="nvapi-..."
+graphify . --backend nvidia
 ```
 
 ## Capabilities
 
 - **Codebase Knowledge Graphs**: Parse Python, JavaScript, TypeScript, Go, Rust, C++, and more into graph representations.
-- **Custom Provider Support**: Integrates with Gemini, OpenAI, Anthropic, DeepSeek, Moonshot, Ollama, and OpenAI-compatible providers (NVIDIA NIM, vLLM, LM Studio).
+- **Custom Provider Support**: Easily register custom OpenAI-compatible backends (NVIDIA NIM, Ollama, vLLM, LiteLLM) via `graphify provider`.
 - **Architectural Insights**: Detect "God Nodes" (overly coupled modules), community clusters, and circular dependencies.
 - **Visual Artifacts**:
   - `graphify-out/graph.html`: Interactive force-directed web graph.
