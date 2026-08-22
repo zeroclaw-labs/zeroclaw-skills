@@ -180,6 +180,16 @@
       "tags": ["Community"],
       "downloads": 0,
       "stars": 0
+    },
+    {
+      "name": "use-404-directory",
+      "version": "0.8.2",
+      "author": "MM-sheng",
+      "description": "Use a public read-only MCP server for official documentation search, deployment verification, and trusted Agent tool discovery.",
+      "category": "research",
+      "tags": ["Community", "MCP", "Agent-Tools"],
+      "downloads": 0,
+      "stars": 0
     }
   ]
 }
