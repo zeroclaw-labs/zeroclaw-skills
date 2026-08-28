@@ -7,7 +7,10 @@
       "author": "zeroclaw-labs",
       "description": "Autonomous code generation agent. Reads context, writes code, runs tests.",
       "category": "coding",
-      "tags": ["Official", "Featured"],
+      "tags": [
+        "Official",
+        "Featured"
+      ],
       "downloads": 2841,
       "stars": 142
     },
@@ -17,7 +20,9 @@
       "author": "zeroclaw-labs",
       "description": "Deep web research with source citation. Summarizes findings privately.",
       "category": "research",
-      "tags": ["Official"],
+      "tags": [
+        "Official"
+      ],
       "downloads": 1923,
       "stars": 98
     },
@@ -27,7 +32,10 @@
       "author": "zeroclaw-labs",
       "description": "Full-featured Telegram bot skill with inline queries and media support.",
       "category": "chat",
-      "tags": ["Official", "Featured"],
+      "tags": [
+        "Official",
+        "Featured"
+      ],
       "downloads": 3201,
       "stars": 167
     },
@@ -37,7 +45,9 @@
       "author": "community",
       "description": "Automated Discord moderation with configurable rules and auto-responses.",
       "category": "chat",
-      "tags": ["Community"],
+      "tags": [
+        "Community"
+      ],
       "downloads": 1547,
       "stars": 83
     },
@@ -47,7 +57,9 @@
       "author": "zeroclaw-labs",
       "description": "AI-powered code review. Catches bugs, suggests improvements, checks style.",
       "category": "coding",
-      "tags": ["Official"],
+      "tags": [
+        "Official"
+      ],
       "downloads": 2156,
       "stars": 119
     },
@@ -57,7 +69,9 @@
       "author": "zeroclaw-labs",
       "description": "ZeroClaw-specific simplify preflight. Checks reuse, known project pitfalls, and avoidable complexity before commit or maintainer review.",
       "category": "coding",
-      "tags": ["Official"],
+      "tags": [
+        "Official"
+      ],
       "downloads": 0,
       "stars": 0
     },
@@ -67,7 +81,9 @@
       "author": "community",
       "description": "Analyze CSV, JSON, and SQL data. Generate charts and insights locally.",
       "category": "data",
-      "tags": ["Community"],
+      "tags": [
+        "Community"
+      ],
       "downloads": 987,
       "stars": 54
     },
@@ -77,7 +93,9 @@
       "author": "zeroclaw-labs",
       "description": "Generate documentation from code. Supports Markdown, RST, and JSDoc.",
       "category": "writing",
-      "tags": ["Official"],
+      "tags": [
+        "Official"
+      ],
       "downloads": 1432,
       "stars": 71
     },
@@ -87,7 +105,9 @@
       "author": "community",
       "description": "Automated API testing with schema validation and load testing.",
       "category": "devops",
-      "tags": ["Community"],
+      "tags": [
+        "Community"
+      ],
       "downloads": 643,
       "stars": 38
     },
@@ -97,7 +117,10 @@
       "author": "zeroclaw-labs",
       "description": "Build and query a private RAG knowledge base from your documents.",
       "category": "research",
-      "tags": ["Official", "Featured"],
+      "tags": [
+        "Official",
+        "Featured"
+      ],
       "downloads": 2087,
       "stars": 134
     },
@@ -107,7 +130,9 @@
       "author": "community",
       "description": "Draft and send email replies with context-aware tone matching.",
       "category": "chat",
-      "tags": ["Community"],
+      "tags": [
+        "Community"
+      ],
       "downloads": 1102,
       "stars": 57
     },
@@ -115,9 +140,11 @@
       "name": "git-assistant",
       "version": "0.2.0",
       "author": "zeroclaw-labs",
-      "description": "Smart git operations — interactive rebase, conflict resolution, changelog generation.",
+      "description": "Smart git operations \u2014 interactive rebase, conflict resolution, changelog generation.",
       "category": "tools",
-      "tags": ["Official"],
+      "tags": [
+        "Official"
+      ],
       "downloads": 1876,
       "stars": 95
     },
@@ -127,7 +154,10 @@
       "author": "community",
       "description": "Agent that evaluates its own performance and iterates on prompts.",
       "category": "agents",
-      "tags": ["Community", "Experimental"],
+      "tags": [
+        "Community",
+        "Experimental"
+      ],
       "downloads": 432,
       "stars": 47
     },
@@ -137,7 +167,9 @@
       "author": "zeroclaw-labs",
       "description": "Route tasks to specialized sub-agents based on intent classification.",
       "category": "agents",
-      "tags": ["Official"],
+      "tags": [
+        "Official"
+      ],
       "downloads": 1654,
       "stars": 112
     },
@@ -147,7 +179,9 @@
       "author": "zeroclaw-labs",
       "description": "Full Slack integration with slash commands, threads, and file sharing.",
       "category": "chat",
-      "tags": ["Official"],
+      "tags": [
+        "Official"
+      ],
       "downloads": 2543,
       "stars": 131
     },
@@ -157,7 +191,10 @@
       "author": "vish-dini",
       "description": "Operate an InboxAPI mailbox from ZeroClaw through the official InboxAPI CLI.",
       "category": "chat",
-      "tags": ["Community", "InboxAPI"],
+      "tags": [
+        "Community",
+        "InboxAPI"
+      ],
       "downloads": 0,
       "stars": 0
     },
@@ -167,7 +204,12 @@
       "author": "kriptoburak",
       "description": "Use Xquik for X/Twitter data workflows through public docs, REST API, MCP, webhooks, and SDKs.",
       "category": "data",
-      "tags": ["Community", "X", "Twitter", "MCP"],
+      "tags": [
+        "Community",
+        "X",
+        "Twitter",
+        "MCP"
+      ],
       "downloads": 0,
       "stars": 0
     },
@@ -177,7 +219,23 @@
       "author": "1mpossible-code",
       "description": "Write and execute PostgreSQL or Supabase SQL queries from natural-language requests.",
       "category": "data",
-      "tags": ["Community"],
+      "tags": [
+        "Community"
+      ],
+      "downloads": 0,
+      "stars": 0
+    },
+    {
+      "name": "vestige",
+      "version": "0.1.0",
+      "author": "samvallad33",
+      "description": "Local-first Rust MCP memory. Causal Backfill answers what caused this. Use for recall, smart_ingest, and backward-only Backfill.",
+      "category": "research",
+      "tags": [
+        "Community",
+        "MCP",
+        "Memory"
+      ],
       "downloads": 0,
       "stars": 0
     }
