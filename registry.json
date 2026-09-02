@@ -180,6 +180,16 @@
       "tags": ["Community"],
       "downloads": 0,
       "stars": 0
+    },
+    {
+      "name": "discord-community-support",
+      "version": "0.1.0",
+      "author": "zeroclaw-labs",
+      "description": "Answers questions about an open-source project in a public Discord from the project's own source tree and docs, and helps reporters draft GitHub issues as prefilled links they submit themselves. Use for public community support channels where the assistant must never file, label, or comment on the tracker itself.",
+      "category": "chat",
+      "tags": ["Official"],
+      "downloads": 0,
+      "stars": 0
     }
   ]
 }
