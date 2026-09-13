@@ -190,6 +190,16 @@
       "tags": ["Official"],
       "downloads": 0,
       "stars": 0
+    },
+    {
+      "name": "hol-guard",
+      "version": "0.1.0",
+      "author": "kantorcodes",
+      "description": "Use HOL Guard to protect local AI tool workflows, review approvals and receipts, and verify agent skill or MCP packages before use.",
+      "category": "security",
+      "tags": ["Community"],
+      "downloads": 0,
+      "stars": 0
     }
   ]
 }
