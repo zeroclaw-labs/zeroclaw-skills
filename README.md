@@ -1,6 +1,6 @@
 # ZeroClaw Skills Index
 
-A skill registry for [ZeroClaw](https://www.zeroclawlabs.ai) — AI agent skills, tools, and workflows. Skills follow the [agentskills.io](https://agentskills.io/specification) open specification.
+A skill registry for [ZeroClaw](https://www.zeroclaw.com) — AI agent skills, tools, and workflows. Skills follow the [agentskills.io](https://agentskills.io/specification) open specification.
 
 ## What we audit, what we don't
 
@@ -23,7 +23,7 @@ zeroclaw skills install <skill-name>
 
 ## Browse skills
 
-Visit the [Skills Hub](https://www.zeroclawlabs.ai/skills) to search and discover skills.
+Visit the [Skills Hub](https://www.zeroclaw.com/skills) to search and discover skills.
 
 ---
 
