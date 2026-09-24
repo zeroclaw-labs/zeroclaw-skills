@@ -190,6 +190,16 @@
       "tags": ["Official"],
       "downloads": 0,
       "stars": 0
+    },
+    {
+      "name": "orca-replay",
+      "version": "0.1.0",
+      "author": "xizhuomengcontin",
+      "description": "Answer questions about what a past agent run actually did by reading a local recording of the run, and re-run that recording offline without contacting a model provider.",
+      "category": "tools",
+      "tags": ["Community", "forensics", "replay"],
+      "downloads": 0,
+      "stars": 0
     }
   ]
 }
