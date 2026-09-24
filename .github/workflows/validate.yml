@@ -1,10 +1,11 @@
 name: Validate Skills
 
 on:
+  # No path filter: `validate` is a required status check, and a path-filtered
+  # workflow never starts on PRs outside those paths (README, workflows, docs),
+  # which left those PRs waiting forever on a check that would not run. The
+  # whole job validates the full registry in seconds, so it runs on every PR.
   pull_request:
-    paths:
-      - 'skills/**'
-      - 'registry.json'
   push:
     branches: [master]
 
