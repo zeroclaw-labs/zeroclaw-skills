@@ -122,6 +122,16 @@
       "stars": 95
     },
     {
+      "name": "routerbase-model-gateway",
+      "version": "0.1.0",
+      "author": "zenlee123",
+      "description": "Configure RouterBase as an OpenAI compatible model gateway for routing, fallback, and media generation workflows.",
+      "category": "tools",
+      "tags": ["Community", "RouterBase"],
+      "downloads": 0,
+      "stars": 0
+    },
+    {
       "name": "self-improving-agent",
       "version": "0.0.3",
       "author": "community",
