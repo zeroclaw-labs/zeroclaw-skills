@@ -12,6 +12,16 @@
       "stars": 142
     },
     {
+      "name": "agent-guild-trust",
+      "version": "1.1.0",
+      "author": "AgentTanuki",
+      "description": "Check evidence about an unfamiliar autonomous agent before delegation and verify signed Agent Guild passports.",
+      "category": "security",
+      "tags": ["Community", "Trust", "MCP", "A2A"],
+      "downloads": 0,
+      "stars": 0
+    },
+    {
       "name": "web-researcher",
       "version": "0.2.1",
       "author": "zeroclaw-labs",
