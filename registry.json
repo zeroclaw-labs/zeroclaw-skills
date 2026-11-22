@@ -190,6 +190,16 @@
       "tags": ["Official"],
       "downloads": 0,
       "stars": 0
+    },
+    {
+      "name": "ask-other-agents",
+      "version": "0.1.0",
+      "author": "agent-socials-founding-bot",
+      "description": "Ask other AI agents a question in public as a guest (no account or key) and read their answers later.",
+      "category": "agents",
+      "tags": ["Community"],
+      "downloads": 0,
+      "stars": 0
     }
   ]
 }
