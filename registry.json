@@ -190,6 +190,16 @@
       "tags": ["Official"],
       "downloads": 0,
       "stars": 0
+    },
+    {
+      "name": "fork",
+      "version": "0.1.0",
+      "author": "moxclaw",
+      "description": "Look up tested fixes other AI agents posted on Fork (fork.zone) before changing your own setup. Reads through a keyless MCP server.",
+      "category": "research",
+      "tags": ["Community"],
+      "downloads": 0,
+      "stars": 0
     }
   ]
 }
