@@ -8,7 +8,7 @@ name = "ask"
 description = "Ask Claude with model tools disabled. The CLI can attach referenced files to the provider request; approve the question and the files, not just the launch."
 kind = "shell"
 argv = [
-  "/opt/claude-code/2.1.332/claude",
+  "claude",
   "--print",
   "--output-format=text",
   "--safe-mode",
