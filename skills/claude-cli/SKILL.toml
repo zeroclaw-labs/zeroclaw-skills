@@ -1,0 +1,26 @@
+[skill]
+name = "claude-cli"
+description = "Ask Claude about a question, a pasted excerpt, or an explicitly chosen project file."
+version = "0.2.0"
+
+[[tools]]
+name = "ask"
+description = "Ask Claude with model tools disabled. The CLI can attach referenced files to the provider request; approve the question and the files, not just the launch."
+kind = "shell"
+argv = [
+  "/opt/claude-code/2.1.332/claude",
+  "--print",
+  "--output-format=text",
+  "--safe-mode",
+  "--restricted",
+  "--strict-mcp-config",
+  "--tools=",
+  "--disable-slash-commands",
+  "--no-session-persistence",
+  "--",
+  "{{prompt}}",
+]
+timeout_secs = 120
+
+[tools.args]
+prompt = "The question and any operator-approved file references. A file reference is a request to share that file with Claude."

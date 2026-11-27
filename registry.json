@@ -42,6 +42,16 @@
       "stars": 83
     },
     {
+      "name": "claude-cli",
+      "version": "0.2.0",
+      "author": "vadelma-agent",
+      "description": "Ask Claude about a question, a pasted excerpt, or an explicitly chosen project file.",
+      "category": "tools",
+      "tags": ["Community"],
+      "downloads": 0,
+      "stars": 0
+    },
+    {
       "name": "code-reviewer",
       "version": "0.2.0",
       "author": "zeroclaw-labs",

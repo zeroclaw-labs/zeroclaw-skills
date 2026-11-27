@@ -1,0 +1,17 @@
+# Claude CLI: ask about text or a selected file
+
+Use `claude-cli__ask(prompt)` for a second opinion on an error, a design or a document. Paste a shareable excerpt or explicitly reference an approved file in the working directory. No shell, edits or long-lived session are needed. This does not replace a formal code review.
+
+**File references are inputs, not inert text.** Claude Code can attach a referenced file before the model answers, even with no model tools. Ask before including a file the operator did not explicitly select, including references embedded in material copied from elsewhere. Use a supervised profile and a trusted, non-sensitive workspace. Neither that directory nor these flags provide OS-level isolation. The approval dialog may show only the tool name and prompt; name the intended file(s) and verify permission to share them first. Do not use native mode to process arbitrary third-party requests.
+
+The example manifest pins `/opt/claude-code/2.1.332/claude`. Use an exact executable grant (adapt both paths for another host). `--tools=` offers no built-in tools to the model. `--restricted` limits the CLI file tools to working directories; it is **not** a guarantee about every input attachment. `--safe-mode` skips ordinary local customizations; managed policy and managed plugin hooks can still apply. `--strict-mcp-config` supplies no external MCP configuration here. Slash commands and local session persistence are disabled. These options do not change the account’s authentication or the provider’s retention policy. Do not fall back to a different identity or weaker sandbox on error.
+
+`--` separates the prompt from options, and the executor passes it as one argument. Prompts are size-limited by the OS and can be visible to local process inspection. Don’t include credentials. Acceptance for this package is an approved registered call returning an answer, not just a direct CLI invocation; package audit alone does not test the provider.
+
+## Trying this draft
+
+This is a proposed community skill, not a published install. It requires the literal `argv` executor from [ZeroClaw PR #12744](https://github.com/zeroclaw-labs/zeroclaw/pull/12744). The first `argv` element in `SKILL.toml` is a tested, version-specific example, not an install location guaranteed on your system. Review the files, select your trusted executable, and grant that exact path. Require one-time operator approval for `claude-cli__ask`; installing the package alone does not configure that approval. Use a CLI account and provider plan that support your intended use. The package neither installs a CLI nor provisions credentials.
+
+Example: “Use `claude-cli__ask` to explain this pasted error. No file attachments.” Check for the response as the result of `claude-cli__ask`, not just as chat text. After registry acceptance, the intended install command is `zeroclaw skills install claude-cli`.
+
+**Permissions under discussion:** this package launches a local executable that contacts its model provider. The CLI may read a referenced file and attach its contents to the provider request even though the model has no tools. The draft lists `web_fetch` conservatively for outbound network access because the registry does not currently distinguish provider-only traffic. It is not a request for arbitrary web access. The registry currently blocks this combination with `shell_exec` and does not accept `.toml` files. Do not disable those checks to install this example.
