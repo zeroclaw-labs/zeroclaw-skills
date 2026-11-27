@@ -1,0 +1,20 @@
+[skill]
+name = "codex-cli"
+description = "Ask Codex to explain code in a trusted workspace without requesting edits."
+version = "0.1.0"
+
+[[tools]]
+name = "ask"
+description = "Ask Codex about text or trusted code using its read-only command sandbox. Codex can read files and share context with its provider. Approve the question and the material, not just the launch."
+kind = "shell"
+argv = [
+  "/opt/codex/0.172.0/lib/node_modules/@openai/codex-linux-arm64/vendor/aarch64-unknown-linux-musl/bin/codex",
+  "--no-daemon", "--sandbox", "read-only", "--ask-for-approval", "never",
+  "exec", "--ephemeral", "--ignore-user-config", "--disable", "hooks", "--disable", "plugins", "--disable", "apps",
+  "-c", 'web_search="disabled"', "--skip-git-repo-check", "--color", "never",
+  "--", "Operator question (answer without edits):\n{{prompt}}",
+]
+timeout_secs = 120
+
+[tools.args]
+prompt = "The question, the trusted workspace or pasted excerpt approved for this run, and which files (if any) Codex should read."

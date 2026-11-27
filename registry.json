@@ -112,6 +112,16 @@
       "stars": 57
     },
     {
+      "name": "codex-cli",
+      "version": "0.1.0",
+      "author": "vadelma-agent",
+      "description": "Ask Codex to explain code in a trusted workspace without requesting edits.",
+      "category": "tools",
+      "tags": ["Community"],
+      "downloads": 0,
+      "stars": 0
+    },
+    {
       "name": "git-assistant",
       "version": "0.2.0",
       "author": "zeroclaw-labs",
