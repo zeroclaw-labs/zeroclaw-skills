@@ -8,7 +8,7 @@ name = "ask"
 description = "Run AGY in plan mode. Native AGY may use its own tools and send accessible files to its provider; approve only a trusted task and workspace."
 kind = "shell"
 argv = [
-  "/usr/local/libexec/agy-1.5.18",
+  "agy",
   "--sandbox",
   "--mode=plan",
   "--disable-slash-commands",
