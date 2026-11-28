@@ -1,7 +1,7 @@
 ---
 name: codex-cli
-description: Ask Codex to explain code in a trusted workspace without requesting edits.
-version: "0.1.0"
+description: Run the installed Codex CLI non-interactively on an approved task in a trusted checkout.
+version: "0.2.0"
 author: vadelma-agent
 license: MIT
 category: tools
@@ -9,9 +9,10 @@ tags: [Community]
 permissions:
   - shell_exec
   - file_read
+  - file_write
   - web_fetch
 ---
 
-Use `codex-cli__ask` for a second opinion, a code explanation, or design trade-offs. ZeroClaw starts Codex in this agent’s configured workspace. Naming another directory in the prompt does not change the working directory or restrict what Codex can read. Name the intended material and any approved files in the prompt shown to the operator. For general questions prefer a neutral workspace and paste only material approved for sharing. For example: “In the public sample, read `parser.rs` and explain why an empty line produces no token. No edits.”
+Use `codex-cli__ask` to ask the configured Codex CLI about a trusted checkout. Confirm the agent's actual working directory and the material approved for sharing. For example: “In this sample project, explain why the parser returns an empty list; cite the test. Do not edit files.” A request not to edit is not an access control.
 
-This is an agent run, not a prompt-only API. Codex can run read-only commands and read accessible material; workspace instructions can also become input. File names in the prompt are not an access control. Use trusted inputs and a workspace whose contents are appropriate for this provider; otherwise use an isolated environment or decline. Require ZeroClaw approval for each launch. Report an error or timeout as such; do not switch sandbox, credentials, provider, or tool as a fallback. Do not use this operation to implement changes or as a substitute for a `codex-review` verdict.
+Approval is for a Codex run, not just transmission of the prompt. Local instructions and configured integrations can run commands or provide additional context. Files may be read, shared or changed within the effective permissions. Ask for one-time ZeroClaw approval. Return the final answer or actual error; do not retry by bypassing a repository check, changing trust or relaxing permissions. Use a dedicated review workflow when a formal verdict is needed.

@@ -113,9 +113,9 @@
     },
     {
       "name": "codex-cli",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "author": "vadelma-agent",
-      "description": "Ask Codex to explain code in a trusted workspace without requesting edits.",
+      "description": "Run the installed Codex CLI non-interactively on an approved task in a trusted checkout.",
       "category": "tools",
       "tags": ["Community"],
       "downloads": 0,

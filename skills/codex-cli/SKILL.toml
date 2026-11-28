@@ -1,20 +1,14 @@
 [skill]
 name = "codex-cli"
-description = "Ask Codex to explain code in a trusted workspace without requesting edits."
-version = "0.1.0"
+description = "Run the installed Codex CLI non-interactively on an approved task in a trusted checkout."
+version = "0.2.0"
 
 [[tools]]
 name = "ask"
-description = "Ask Codex about text or trusted code using its read-only command sandbox. Codex can read files and share context with its provider. Approve the question and the material, not just the launch."
+description = "Run Codex exec in the agent workspace. Depending on its configuration, Codex and its integrations may read or edit files, run commands and send context to providers. Approve the task and workspace."
 kind = "shell"
-argv = [
-  "codex",
-  "--no-daemon", "--sandbox", "read-only", "--ask-for-approval", "never",
-  "exec", "--ephemeral", "--ignore-user-config", "--disable", "hooks", "--disable", "plugins", "--disable", "apps",
-  "-c", 'web_search="disabled"', "--skip-git-repo-check", "--color", "never",
-  "--", "Operator question (answer without edits):\n{{prompt}}",
-]
-timeout_secs = 120
+argv = ["codex", "exec", "--", "{{prompt}}"]
+timeout_secs = 3600
 
 [tools.args]
-prompt = "The question, the trusted workspace or pasted excerpt approved for this run, and which files (if any) Codex should read."
+prompt = "The task and material the operator approves for this Codex run in the current workspace."
