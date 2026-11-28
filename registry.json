@@ -2,6 +2,16 @@
   "version": 1,
   "skills": [
     {
+      "name": "agy-cli",
+      "version": "0.3.0",
+      "author": "vadelma-agent",
+      "description": "Ask Antigravity for analysis or a plan using a trusted workspace.",
+      "category": "tools",
+      "tags": ["Community"],
+      "downloads": 0,
+      "stars": 0
+    },
+    {
       "name": "auto-coder",
       "version": "0.3.0",
       "author": "zeroclaw-labs",
