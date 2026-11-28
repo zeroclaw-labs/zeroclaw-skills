@@ -43,9 +43,9 @@
     },
     {
       "name": "claude-cli",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "author": "vadelma-agent",
-      "description": "Ask Claude about a question, a pasted excerpt, or an explicitly chosen project file.",
+      "description": "Ask the installed Claude Code CLI a question in a trusted workspace using its configured tools and permissions.",
       "category": "tools",
       "tags": ["Community"],
       "downloads": 0,

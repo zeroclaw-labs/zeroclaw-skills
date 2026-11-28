@@ -1,7 +1,7 @@
 ---
 name: claude-cli
-description: Ask Claude about a question, a pasted excerpt, or an explicitly chosen project file.
-version: "0.2.0"
+description: Ask the installed Claude Code CLI a question in a trusted workspace using its configured tools and permissions.
+version: "0.3.0"
 author: vadelma-agent
 license: MIT
 category: tools
@@ -10,9 +10,10 @@ tags:
 permissions:
   - shell_exec
   - file_read
+  - file_write
   - web_fetch
 ---
 
-Use `claude-cli__ask` for a second opinion on a question, a pasted excerpt, or a file the operator explicitly wants Claude to see. For example: “In @README.md, which setup instruction is ambiguous?” is appropriate when the operator has approved sharing that README from this workspace.
+Use `claude-cli__ask` for a question about a trusted checkout. In the prompt, name the task and material the operator is willing to share. Confirm that the actual working directory and its Claude Code configuration are trusted. Example: “In this approved sample checkout, explain why the parser returns an empty list. Cite the implementation. Do not edit files.” That last sentence is an instruction, not an access control.
 
-Claude’s model tools are disabled. Its CLI can still expand file references before the model sees the question. Name the agreed workspace and selected file(s) in the `prompt` so they appear in the approval dialog. Check references, including those inside quoted or pasted material, against the operator’s intended files. If the target or permission to share it is unclear, ask first; do not forward untrusted input verbatim. The working directory is not an OS access boundary. For a task that needs actual edits or a formal review, use the appropriate workflow instead. Return the answer or the actual error; do not retry with a weaker policy.
+This approves a Claude Code run, not a text-only exchange. Project hooks and MCP servers can start without a separate prompt. Claude may use its configured tools, edit files, expand file references, and send project material to a provider. Do not pass untrusted workspaces or third-party requests to a native run. Return the result or actual error; do not retry with a weaker policy.
