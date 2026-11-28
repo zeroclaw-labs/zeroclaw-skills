@@ -1,0 +1,14 @@
+[skill]
+name = "claude-cli"
+description = "Ask the installed Claude Code CLI a question in a trusted workspace using its configured tools and permissions."
+version = "0.3.0"
+
+[[tools]]
+name = "ask"
+description = "Run headless Claude Code in a trusted workspace. Configured tools and hooks may run commands, edit files and send project context to providers. Approve the task and workspace."
+kind = "shell"
+argv = ["claude", "-p", "--", "{{prompt}}"]
+timeout_secs = 3600
+
+[tools.args]
+prompt = "The question, intended workspace, and material the operator approves for this Claude Code run."
