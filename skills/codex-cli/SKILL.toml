@@ -1,0 +1,15 @@
+[skill]
+name = "codex-cli"
+description = "Run the installed Codex CLI non-interactively on an approved task in a trusted checkout."
+version = "0.2.0"
+
+[[tools]]
+name = "ask"
+description = "Run Codex exec in the operator-approved Git checkout. Approve the exact checkout path and task: Codex and its integrations may read or edit files, run commands and send context to providers."
+kind = "shell"
+argv = ["codex", "exec", "-C", "{{checkout}}", "--", "{{prompt}}"]
+timeout_secs = 3600
+
+[tools.args]
+checkout = "Absolute path to the trusted Git checkout or worktree the operator approved, as visible to the CLI."
+prompt = "The task and material the operator approves for this Codex run in that checkout."
