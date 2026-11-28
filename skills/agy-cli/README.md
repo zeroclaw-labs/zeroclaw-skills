@@ -1,12 +1,16 @@
 # Antigravity CLI: ask about a trusted project
 
-Use `agy-cli__ask(prompt)` for explanations, design comparisons and implementation plans. It starts one AGY print invocation in the agent’s workspace with `--mode=plan` and `--sandbox`. These are AGY settings: plan mode expresses the task intent; `--sandbox` restricts terminal use. Neither makes AGY a text-only model or guarantees a read-only filesystem.
+Use `agy-cli__ask(prompt)` for explanations, design comparisons and implementation plans. It sends one question using [AGY headless mode](https://antigravity.google/docs/cli/headless/) and returns the CLI’s default text output. The skill does not override your model, reasoning effort or execution mode. If no mode is configured, AGY 1.5.7+ uses auto where available; workspace edits and some commands can then proceed without prompting. A request for an explanation is not a read-only guarantee.
 
 Approve this as a **delegated AGY run**. ZeroClaw checks the executable at launch; it does not individually approve AGY’s own actions. Depending on its configuration, AGY may use file or terminal tools, read or write files, contact integrations such as MCP, or retain local and provider-side state. Native mode runs with the OS user’s access, not just access to the current directory. Don’t use a native run for untrusted inputs, repositories or shared-channel traffic. Use a trusted, non-sensitive checkout whose contents may be sent to the provider. An empty directory reduces incidental context but does not provide isolation.
 
-The manifest runs the installed `agy` CLI (tested flags: 1.5.18). Keep launch approval supervised. The operator may see only the tool name and prompt at approval: establish the workspace and sharing scope first. Authentication stays with the CLI. Bubblewrap is optional; selecting it does not grant credentials or egress. Never fall back silently.
+The manifest runs the installed `agy` CLI (CLI reference checked with 1.5.18). Keep launch approval supervised. The operator may see only the tool name and prompt at approval: establish the workspace and sharing scope first. Authentication stays with the CLI. Bubblewrap is optional; selecting it does not grant credentials or egress. Never fall back silently.
 
-`--print={{prompt}}` passes one argument without a shell; slash commands are disabled. The prompt is subject to OS argument-size limits and may be visible to local process inspection. Don’t include credentials. The CLI print timeout is 90 seconds; the executor timeout is 120 seconds. A timeout is not an undo for file changes, external calls or detached work.
+The complete invocation is `argv = ["agy", "-p", "{{prompt}}"]`. ZeroClaw passes the prompt as one argument without a shell. AGY interprets it normally, so a leading slash may invoke a command or expand a skill. Only approve that when intended. The skill does not set AGY’s terminal sandbox; ZeroClaw’s own sandbox and approval policy still apply. Don’t put credentials in the prompt: argv is subject to OS size limits and may be visible to local process inspection.
+
+Set persistent preferences such as the model in AGY itself. This tool accepts a prompt, not arbitrary CLI flags.
+
+The skill allows up to one hour per invocation (`timeout_secs = 3600`). This is a wall-clock limit, not an inactivity timer. A shorter caller or channel turn limit can still end the run first. Timing out does not undo completed edits or external actions. AGY may still return an answer after a tool action was denied; verify cited evidence when the answer depends on reading a file.
 
 ## Trying this draft
 

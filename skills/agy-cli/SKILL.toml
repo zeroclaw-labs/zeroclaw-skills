@@ -1,22 +1,14 @@
 [skill]
 name = "agy-cli"
 description = "Ask Antigravity for analysis or a plan using a trusted workspace."
-version = "0.2.0"
+version = "0.3.0"
 
 [[tools]]
 name = "ask"
-description = "Run AGY in plan mode. Native AGY may use its own tools and send accessible files to its provider; approve only a trusted task and workspace."
+description = "Run one headless AGY prompt using the CLI’s settings. Slash commands and skills may expand; AGY may run commands, edit files and send context to its provider. Approve the task and material."
 kind = "shell"
-argv = [
-  "agy",
-  "--sandbox",
-  "--mode=plan",
-  "--disable-slash-commands",
-  "--output-format=text",
-  "--print-timeout=90s",
-  "--print={{prompt}}",
-]
-timeout_secs = 120
+argv = ["agy", "-p", "{{prompt}}"]
+timeout_secs = 3600
 
 [tools.args]
 prompt = "The question or planning task, including which project material the operator intends AGY to use."
